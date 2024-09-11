@@ -154,8 +154,8 @@ export default function Page() {
           {/* On Sale Section */}
           <div className={styles.productSection}>
             <h2>On Sale</h2>
-            {products.map((product) => (
-            <div className={styles.productCard}>
+            {products.map((product,index) => (
+            <div key={index} className={styles.productCard}>
               <Image src={product.image} height={100} width={100} />
               <div>
                 <h3>{product.name}</h3>
