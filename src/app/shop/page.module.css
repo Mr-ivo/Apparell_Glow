@@ -1,0 +1,221 @@
+/* Global Styles */
+.shopContainer {
+    padding: 50px 20px;
+    max-width: 1200px;
+    margin: 0 auto;
+    text-align: center;
+    margin-top: 40px;
+    background-color: #f9f9f9;
+    font-family: "poppins";
+  }
+  
+  .shopTitle {
+    font-size: 2rem;
+    margin-bottom: 20px;
+    color: #007bff;
+    letter-spacing: 1.2px;
+    text-transform: uppercase;
+  }
+  
+  .shopDescription {
+    font-size: 1rem;
+    margin-bottom: 40px;
+    font-family: "poppins";
+    color: #7f8c8d;
+    max-width: 800px;
+    margin: 0 auto;
+    line-height: 1.8;
+  }
+  
+  /* Collection Section */
+  .collections {
+    margin-bottom: 60px;
+  }
+  
+  .collectionCards {
+    display: flex;
+    justify-content: space-between;
+    gap: 20px;
+  }
+  
+  .collectionCard {
+    background: linear-gradient(145deg, #f3f4f6, #ffffff);
+    padding: 30px;
+    border-radius: 10px;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+    flex: 1;
+    text-align: left;
+    transition: transform 0.3s ease;
+    cursor: pointer;
+  }
+  
+  .collectionCard:hover {
+    transform: translateY(-10px);
+  }
+  
+  .collectionCard h3 {
+    font-size: 1.8rem;
+    color: #007bff;
+    margin-bottom: 15px;
+    text-transform: capitalize;
+  }
+  
+  .collectionCard p {
+    font-size: 1rem;
+    color: #7f8c8d;
+    line-height: 1.6;
+  }
+  
+  /* Products Section */
+  .productsSection {
+    margin-bottom: 60px;
+  }
+  
+  .products {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    gap: 30px;
+  }
+  
+  .productCard {
+    background: #ffffff;
+    padding: 20px;
+    border-radius: 12px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+    width: calc(33.333% - 20px);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    text-align: center;
+    cursor: pointer;
+  }
+  
+  .productCard:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.15);
+  }
+  
+  .productCard img {
+    border-radius: 10px;
+    transition: transform 0.3s ease;
+  }
+  
+  .productCard img:hover {
+    transform: scale(1.05);
+  }
+  
+  .productCard h3 {
+    margin-top: 15px;
+    font-size: 1.5rem;
+    color: #2c3e50;
+    font-weight: 600;
+  }
+  
+  .productDescription {
+    margin-top: 10px;
+    font-size: 1rem;
+    color: #7f8c8d;
+    line-height: 1.6;
+  }
+  
+  .price {
+    font-size: 1.4rem;
+    color: #007bff;
+    margin-top: 15px;
+    font-weight: bold;
+  }
+  .all{
+    color:#007bff;
+    font-family: "poppins";
+    padding: 10px;
+    /* font-size: 30%; */
+  }
+  
+  .addToCartButton {
+    background-color: #007bff;
+    color: white;
+    padding: 12px 20px;
+    border-radius: 30px;
+    border: none;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.3s ease;
+    margin-top: 20px;
+    display: inline-block;
+  }
+  
+  .addToCartButton:hover {
+    background-color: #219150;
+    transform: translateY(-5px);
+  }
+  
+  /* Shopping Benefits */
+  .benefits {
+    background-color: #ecf0f1;
+    padding: 40px;
+    border-radius: 15px;
+    text-align: left;
+  }
+  
+  .benefits h2 {
+    font-size: 2.5rem;
+    margin-bottom: 30px;
+    color: #2c3e50;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    text-align: center;
+  }
+  
+  .benefitsList {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+  }
+  
+  .benefitsList li {
+    font-size: 1.3rem;
+    color: #34495e;
+    margin-bottom: 20px;
+    display: flex;
+    align-items: center;
+    gap: 15px;
+  }
+  
+  .benefitsList li::before {
+    content: '✔️';
+    font-size: 1.5rem;
+    color: #007bff;
+    margin-right: 10px;
+  }
+  
+  
+  /* Responsive Design */
+  @media (max-width: 1024px) {
+    .collectionCards {
+      flex-direction: column;
+      gap: 30px;
+    }
+  
+    .products {
+      flex-direction: column;
+      align-items: center;
+    }
+  
+    .productCard {
+      width: 100%;
+    }
+  }
+  
+  @media (max-width: 768px) {
+    .shopTitle {
+      font-size: 2.5rem;
+    }
+  
+    .benefits h2 {
+      font-size: 2rem;
+    }
+  
+    .footer p {
+      font-size: 0.9rem;
+    }
+  }
+  

@@ -1,0 +1,144 @@
+/* Header */
+.header {
+  background-color: #f8f9fa;
+  padding: 20px;
+  border-bottom: 1px solid #ddd;
+  font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+  display: flex;
+  width:100%;
+  justify-content: space-between;
+  align-items: center;
+  transition: .3s;
+  border-radius: 3px;
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 1000;
+}.header.show {
+  top: 0;
+  z-index: 2000000 !important;
+}
+.header.scrolled {
+  z-index: 2000000 !important;
+  background-color: #30a7f6;
+
+}
+.four {
+  background-color: #000;
+  color: #fff;
+  border-radius: 50%;
+  top: 2%;
+  font-size: 1.2rem;
+  padding: 3px;
+  position:absolute;
+  margin-left: 10px;
+}
+
+.header.hide {
+  top: -100px; /* Adjust this value as necessary */
+}
+
+/* Logo */
+.logo {
+  margin-right: auto;
+  padding:5px
+}
+
+/* Logo Link */
+.logoLink {
+  font-size: 1.5rem;
+  font-weight: bold;
+  text-decoration: none;
+  color: #333;
+}
+
+/* Navigation Bar */
+.nav {
+  display: flex;
+  align-items: center;
+  gap: 20px; /* Add space between nav items */
+}
+
+/* Nav Links */
+.navLinks {
+  display: flex;
+  align-items: center;
+  gap: 20px; /* Add space between each link */
+}
+
+/* Nav Link */
+.navLink {
+  color: #333;
+  text-decoration: none;
+  font-size: 16px;
+  font-weight: bold;
+  transition: color 0.3s ease;
+}
+
+.navLink:hover {
+  color: #007bff;
+}
+
+/* Cart Icon */
+.cartIcon {
+  font-size: 20px;
+  color: #333;
+  cursor: pointer;
+}
+
+/* Hamburger Icon */
+.hamburgerIcon {
+  display: none;
+  font-size: 24px;
+  color: #333;
+  cursor: pointer;
+}
+
+/* Pop-up Menu */
+.menuPopup {
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  background-color: rgba(0, 0, 0, 0.8);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+.popupNavLink {
+  margin: 20px 0;
+  font-size: 20px;
+  color: #fff;
+  text-decoration: none;
+}
+
+.closeIcon {
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  font-size: 24px;
+  color: #fff;
+  cursor: pointer;
+}
+
+/* Responsive Styles */
+@media (max-width: 768px) {
+  .navLink {
+    display: none;
+  }
+
+  .hamburgerIcon {
+    display: block;
+  }
+
+  .logo {
+    position: static;
+    transform: none;
+    margin: 10px 0;
+  }
+}
+  
