@@ -19,7 +19,7 @@ export default function Page() {
             Established in 2004, our mission has always been to provide high-quality, natural, and ethically sourced cosmetic products to our customers.
           </p>
           <p>
-            Our founder, [Founder’s Name], started the journey after realizing that skincare products should nourish and protect, not harm, your skin. With a deep passion for natural ingredients, we carefully curate products that are designed to bring out the best in every skin type.
+            Our founde, MR IVO started the journey after realizing that skincare products should nourish and protect, not harm, your skin. With a deep passion for natural ingredients, we carefully curate products that are designed to bring out the best in every skin type.
           </p>
         </div>
 
@@ -50,7 +50,7 @@ export default function Page() {
         <div className={styles.aboutSection}>
           <h2>Get in Touch</h2>
           <p>
-            Whether you have questions about our products, need skincare advice, or simply want to share your beauty journey, we’re here for you! Reach out to us through our social media platforms or send us an email at [Contact Email].
+            Whether you have questions about our products, need skincare advice, or simply want to share your beauty journey, we’re here for you! Reach out to us through our social media platforms or send us an email at ebongthierry569@gmail.com.
           </p>
           <div className={styles.socialIcons}>
             <FaFacebook />
