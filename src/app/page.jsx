@@ -8,6 +8,7 @@ import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import BackToTopButton from "./BackToTop/BackToTOP";
 import Link from "next/link";
+import Footer from "./Footer/Footer";
 
 export default function Page() {
   const { addToCart } = useCart();
@@ -176,13 +177,7 @@ export default function Page() {
           {/* // ))} */}
       </section>
       <BackToTopButton />
-      {/* Footer */}
-      <footer className={styles.footer}>
-        <p>&copy; 2024 ApparellGlow. All rights reserved.</p>
-        <div className={styles.socialIcons}>
-          <FaFacebook />
-        </div>
-      </footer>
+      <Footer />
     </>
   );
 }

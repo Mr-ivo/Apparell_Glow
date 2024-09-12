@@ -2,6 +2,7 @@
 import { FaFacebook, FaInstagram, FaTwitter } from 'react-icons/fa';
 import styles from '../about/page.module.css';
 import BackToTopButton from '../BackToTop/BackToTOP';
+import Footer from '../Footer/Footer';
 
 export default function Page() {
   return (
@@ -62,9 +63,7 @@ export default function Page() {
 
       <BackToTopButton />
 
-      <footer className={styles.footer}>
-        <p>&copy; 2024 ApparellGlow. All rights reserved.</p>
-      </footer>
+      <Footer />
     </>
   );
 }

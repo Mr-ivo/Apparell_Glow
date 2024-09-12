@@ -44,8 +44,8 @@
   
   .aboutSection p, .aboutSection ul {
     font-size: 1.1rem;
+    font-family: "poppins";
     line-height: 1.7;
-    color: #333;
   }
   
   .aboutSection ul {
@@ -87,9 +87,6 @@
     color: #fff;
   }
   
-  .footer p {
-    margin: 0;
-  }
   
   /* Responsive Styles */
   @media (max-width: 768px) {

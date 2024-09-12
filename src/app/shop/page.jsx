@@ -3,6 +3,7 @@ import Image from "next/image";
 import styles from "../shop/page.module.css";
 import { useCart } from "../context/CartContext";
 import BackToTopButton from "../BackToTop/BackToTOP";
+import Footer from "../Footer/Footer";
 
 export default function Shop() {
   const { cartItems, addToCart, removeFromCart, getTotalPrice } = useCart();
@@ -135,6 +136,8 @@ export default function Shop() {
           </li>
         </ul>
       </div>
+      <Footer />
     </div>
+    
   );
 }

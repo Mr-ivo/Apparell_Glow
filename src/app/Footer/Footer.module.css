@@ -1,0 +1,94 @@
+/* General Footer Styles */
+.footer {
+border-top: 1px solid #ccc;
+  padding: 40px 20px;
+  font-family: 'Poppins';
+}
+
+.container {
+  display: flex;
+  justify-content: space-around;
+  flex-wrap: wrap;
+  padding-bottom: 20px;
+}
+
+.column {
+  flex-basis: 200px;
+  margin: 10px;
+}
+
+.title {
+  font-size: 18px;
+  margin-bottom: 20px;
+
+}
+
+/* Form Styles */
+.form {
+  display: flex;
+  flex-direction: column;
+}
+
+.input {
+  padding: 12px;
+  margin-bottom: 10px;
+  border-radius: 5px;
+  border: 1px solid #ddd;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.button {
+  padding: 12px;
+  background-color: #4984e9;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+
+
+.paymentMethods {
+  display: flex;
+  gap: 50px;
+}
+
+.paymentMethod {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 14px;
+}
+
+/* Social Icons */
+.socialIcons {
+  display: flex;
+  gap: 15px;
+  font-size: 24px;
+  color: #6976ff;
+  cursor: pointer;
+}
+
+.socialIcons svg:hover {
+  color: #ff85c3;
+  cursor: pointer;
+}
+
+/* Contact Information */
+.contactInfo {
+  font-size: 14px;
+  margin-bottom: 10px;
+}
+
+/* Footer Bottom */
+.footerBottom {
+  border-top: 1px solid #ddd;
+  padding-top: 20px;
+  flex-wrap: wrap;
+}
+.two {
+  text-align: center;
+  font-family: "poppins";
+}

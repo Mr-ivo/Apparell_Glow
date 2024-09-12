@@ -14,14 +14,11 @@
   
   .contactContainer h2 {
     font-size: 2.5rem;
-    color: #2c3e50;
-    /* margin-bottom: 10px; */
     letter-spacing: 1.5px;
   }
   
   .contactContainer p {
     font-size: 1.1rem;
-    color: #7f8c8d;
     margin-bottom: 30px;
     line-height: 1.6;
   }
@@ -40,7 +37,6 @@
     width: 80%;
     padding: 15px;
     font-size: 1rem;
-    color: #34495e;
     background-color: #fff;
     border: 2px solid #dcdcdc;
     border-radius: 8px;
@@ -67,6 +63,7 @@
     color: #7f8c8d;
     transition: top 0.3s ease, font-size 0.3s ease, color 0.3s ease;
     pointer-events: none;
+    font-family: "poppins";
   }
   
   .inputField:focus + label, .textareaField:focus + label,

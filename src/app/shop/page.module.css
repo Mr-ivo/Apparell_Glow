@@ -5,7 +5,7 @@
     margin: 0 auto;
     text-align: center;
     margin-top: 40px;
-    background-color: #f9f9f9;
+    /* background-color: #f9f9f9; */
     font-family: "poppins";
   }
   
@@ -21,7 +21,7 @@
     font-size: 1rem;
     margin-bottom: 40px;
     font-family: "poppins";
-    color: #7f8c8d;
+    /* color: #7f8c8d; */
     max-width: 800px;
     margin: 0 auto;
     line-height: 1.8;
@@ -39,7 +39,7 @@
   }
   
   .collectionCard {
-    background: linear-gradient(145deg, #f3f4f6, #ffffff);
+    /* background: linear-gradient(145deg, #f3f4f6, #ffffff); */
     padding: 30px;
     border-radius: 10px;
     box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
@@ -62,7 +62,7 @@
   
   .collectionCard p {
     font-size: 1rem;
-    color: #7f8c8d;
+    /* color: #7f8c8d; */
     line-height: 1.6;
   }
   
@@ -79,7 +79,7 @@
   }
   
   .productCard {
-    background: #ffffff;
+    /* background: #ffffff; */
     padding: 20px;
     border-radius: 12px;
     box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
@@ -106,14 +106,14 @@
   .productCard h3 {
     margin-top: 15px;
     font-size: 1.5rem;
-    color: #2c3e50;
+    /* color: #2c3e50; */
     font-weight: 600;
   }
   
   .productDescription {
     margin-top: 10px;
     font-size: 1rem;
-    color: #7f8c8d;
+    /* color: #7f8c8d; */
     line-height: 1.6;
   }
   
@@ -150,7 +150,7 @@
   
   /* Shopping Benefits */
   .benefits {
-    background-color: #ecf0f1;
+    /* background-color: #ecf0f1; */
     padding: 40px;
     border-radius: 15px;
     text-align: left;
@@ -159,7 +159,7 @@
   .benefits h2 {
     font-size: 2.5rem;
     margin-bottom: 30px;
-    color: #2c3e50;
+    /* color: #2c3e50; */
     text-transform: uppercase;
     letter-spacing: 1.5px;
     text-align: center;
@@ -173,7 +173,7 @@
   
   .benefitsList li {
     font-size: 1.3rem;
-    color: #34495e;
+    /* color: #34495e; */
     margin-bottom: 20px;
     display: flex;
     align-items: center;
