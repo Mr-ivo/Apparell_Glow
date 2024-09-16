@@ -56,14 +56,14 @@
   
   .leb {
     position: absolute;
-    left: 65px;
+    left: 63px;
     top: 50%;
     transform: translateY(-55%);
-    font-size: 1rem;
+    font-size: 0.5rem;
     color: #7f8c8d;
     transition: top 0.3s ease, font-size 0.3s ease, color 0.3s ease;
     pointer-events: none;
-    font-family: "poppins";
+    /* font-family: "poppins"; */
   }
   
   .inputField:focus + label, .textareaField:focus + label,
