@@ -7,7 +7,6 @@ export default function Page() {
   const { cartItems, removeFromCart, getTotalPrice } = useCart();
 console.log(cartItems);
 
-  // Log cart items to verify they're passed to the components
   console.log("Cart Items in UI:", cartItems);
 
   return (

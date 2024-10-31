@@ -1,5 +1,4 @@
 "use client";
-import { FaFacebook } from "react-icons/fa";
 import styles from "../app/page.module.css";
 import Image from "next/image";
 import Slider from "react-slick";
@@ -46,7 +45,7 @@ export default function Page() {
       name: "Nivea Q10",
       price: 4500,
       oldPrice: 2500,
-      image: "/nivea.jpg",
+      image: "/images (1).jpeg",
     },
 
     {
