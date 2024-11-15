@@ -117,14 +117,13 @@ export default function Page() {
           </div>
         </motion.section>
 
-        {/* Contact Section */}
         <motion.section 
           variants={fadeInUp}
           className="text-center space-y-8"
         >
           <h2 className="text-3xl md:text-4xl font-bold">Get in Touch</h2>
           <p className="text-gray-600 dark:text-gray-300 max-w-2xl mx-auto">
-            Whether you have questions about our products, need skincare advice, or simply want to share your beauty journey, we're here for you! Reach out to us through our social media platforms or send us an email at ebongthierry569@gmail.com.
+            Whether you have questions about our products, need skincare advice, or simply want to share your beauty journey, we are here for you Reach out to us through our social media platforms or send us an email at ebongthierry569@gmail.com.
           </p>
           <div className="flex justify-center space-x-6">
             {[

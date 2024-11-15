@@ -68,7 +68,7 @@ export default function CartPage() {
                 Your cart is empty
               </h3>
               <p className="text-gray-500 dark:text-gray-400 mb-6">
-                Looks like you haven't added any items to your cart yet.
+                Looks like you have not added any items to your cart yet.
               </p>
               <Link href="/shop">
                 <motion.button

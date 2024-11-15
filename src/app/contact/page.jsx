@@ -59,7 +59,7 @@ export default function ContactForm() {
                 <div>
                   <h2 className="text-3xl font-bold mb-6">Get in Touch</h2>
                   <p className="text-blue-100 mb-8">
-                    We'd love to hear from you! Fill out the form and we'll get back to you shortly.
+                    We do not love to hear from you! Fill out the form and we will get back to you shortly.
                   </p>
                   <div className="space-y-6">
                     <div className="flex items-center space-x-4">
