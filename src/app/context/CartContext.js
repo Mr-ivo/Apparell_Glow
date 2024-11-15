@@ -1,33 +1,72 @@
 'use client'
-import { createContext, useState, useContext } from 'react';
+import React, { createContext, useContext, useState, useCallback } from 'react';
+import { toast } from 'react-hot-toast';
 
-const CartContext = createContext();
+// Create the context
+const CartContext = createContext(undefined);
 
+// Define the initial cart state
+const initialState = {
+  cartItems: [],
+  addToCart: () => {},
+  removeFromCart: () => {},
+  getTotalPrice: () => 0,
+  clearCart: () => {},
+};
+
+// Create the provider component
 export function CartProvider({ children }) {
   const [cartItems, setCartItems] = useState([]);
 
-  const addToCart = (product) => {
-    setCartItems((prevItems) => [...prevItems, product]);
-    console.log("Cart Items: ", cartItems); // Ensure cart items are being logged when addeds
-  };
+  const addToCart = useCallback((product) => {
+    setCartItems((prevItems) => {
+      // Check if item already exists in cart
+      const existingItem = prevItems.find(item => item.id === product.id);
+      if (existingItem) {
+        toast.error('Item already in cart');
+        return prevItems;
+      }
+      toast.success('Added to cart!');
+      return [...prevItems, product];
+    });
+  }, []);
 
-  const removeFromCart = (id) => {
-    setCartItems((prevItems) => prevItems.filter((item) => item.id !== id));
-  };
+  const removeFromCart = useCallback((productId) => {
+    setCartItems(prevItems => prevItems.filter(item => item.id !== productId));
+    toast.success('Removed from cart');
+  }, []);
 
-  const getTotalPrice = () => {
-    return cartItems.reduce((acc, item) => acc + item.price, 0);
+  const getTotalPrice = useCallback(() => {
+    return cartItems.reduce((total, item) => total + item.price, 0);
+  }, [cartItems]);
+
+  const clearCart = useCallback(() => {
+    setCartItems([]);
+    toast.success('Cart cleared');
+  }, []);
+
+  const value = {
+    cartItems,
+    addToCart,
+    removeFromCart,
+    getTotalPrice,
+    clearCart,
   };
 
   return (
-    <CartContext.Provider value={{ cartItems, addToCart, removeFromCart, getTotalPrice }}>
+    <CartContext.Provider value={value}>
       {children}
     </CartContext.Provider>
   );
 }
 
-export const useCart = () => {
-  return useContext(CartContext);
-};
+// Create the hook to use the cart context
+export function useCart() {
+  const context = useContext(CartContext);
+  if (context === undefined) {
+    throw new Error('useCart must be used within a CartProvider');
+  }
+  return context;
+}
 
 
