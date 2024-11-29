@@ -127,12 +127,12 @@ export default function Page() {
               transition={{ duration: 1, ease: "easeInOut" }}
             >
               <div className="relative h-full w-full">
-                <Image
+              <Image
                   src={product.image}
-                  layout="fill"
-                  objectFit="cover"
+                  width={700} 
+                  height={400} 
                   alt={product.name}
-                  className="filter brightness-90"
+                  className="rounded-lg object-cover filter brightness-95" 
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent" />
               </div>
@@ -229,7 +229,7 @@ export default function Page() {
                 initial={{ width: "0%" }}
                 animate={{ width: "100%" }}
                 transition={{ duration: 5, repeat: Infinity }}
-                style={{ backgroundColor: products[currentProduct].color }}
+                style={{ backgroundColor: products[currentProduct].color }}  //representing the infinity line 
               />
             </motion.div>
 
