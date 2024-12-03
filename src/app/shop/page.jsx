@@ -1,4 +1,6 @@
-'use client';
+ 'use client'; // Add this at the top of your file
+
+import React, { useState } from "react"; // Import useState
 import Image from "next/image";
 import { motion } from "framer-motion";
 import { useCart } from "../context/CartContext";
@@ -55,12 +57,25 @@ const staggerContainer = {
 
 export default function ShopContent() {
   const { cartItems, addToCart } = useCart();
+  const [favorites, setFavorites] = useState([]); // State for favorites
 
   const handleAddToCart = (product) => {
     const exists = cartItems.some(item => item.id === product.id);
     if (!exists) {
       addToCart(product);
     }
+  };
+
+  const handleToggleFavorite = (product) => {
+    setFavorites((prevFavorites) => {
+      if (prevFavorites.some(item => item.id === product.id)) {
+        // If it's already a favorite, remove it
+        return prevFavorites.filter(item => item.id !== product.id);
+      } else {
+        // Otherwise, add it to favorites
+        return [...prevFavorites, product];
+      }
+    });
   };
 
   return (
@@ -74,7 +89,7 @@ export default function ShopContent() {
       >
         <div className="absolute inset-0 z-0">
           <Image
-            src="/image2.jpeg"
+            src="https://www.meagherspharmacy.ie/cdn/shop/files/cerave-moisturising-lotion-for-normal-to-very-dry-skin-body-moisturiser-meaghers-pharmacy-30595017867377_1000x1000.jpg?v=1690330696"
             alt="Beauty products background"
             fill
             className="object-cover blur-sm"
@@ -112,42 +127,6 @@ export default function ShopContent() {
         </div>
       </motion.section>
 
-      {/* Featured Categories */}
-      <section className="py-16 px-4">
-        <motion.div 
-          className="max-w-6xl mx-auto"
-          variants={staggerContainer}
-          initial="initial"
-          whileInView="animate"
-          viewport={{ once: true }}
-        >
-          <h2 className="text-3xl font-bold text-center mb-12">Shop by Category</h2>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            {['Face Care', 'Body Care', 'Serums'].map((category, index) => (
-              <motion.div
-                key={category}
-                className="relative group cursor-pointer"
-                variants={fadeInUp}
-                whileHover={{ y: -10 }}
-              >
-                <div className="h-64 bg-gray-100 rounded-lg overflow-hidden">
-                  <Image
-                    src={`/image2.jpeg`}
-                    alt={category}
-                    fill
-                    className="object-cover group-hover:scale-110 transition-transform duration-300"
-                  />
-                  <div className="absolute inset-0 bg-black/30 group-hover:bg-black/40 transition-colors" />
-                  <div className="absolute inset-0 flex items-center justify-center">
-                    <h3 className="text-white text-2xl font-bold">{category}</h3>
-                  </div>
-                </div>
-              </motion.div>
-            ))}
-          </div>
-        </motion.div>
-      </section>
-
       {/* Products Grid */}
       <section className="py-16 px-4 bg-gray-50">
         <div className="max-w-6xl mx-auto">
@@ -176,16 +155,17 @@ export default function ShopContent() {
               >
                 <div className="relative h-72">
                   <Image
-                    src={product.image}
+                    src={"https://jnj-content-lab2.brightspotcdn.com/dims4/default/54b9515/2147483647/strip/true/crop/1961x1103+20+0/resize/800x450!/quality/90/?url=https%3A%2F%2Fjnj-production-jnj.s3.us-east-1.amazonaws.com%2Fbrightspot%2Feb%2Faf%2F6f888cacd55ee7c1e82b293bede5%2Fbaby2.jpg"}
                     alt={product.name}
                     fill
                     className="object-cover"
                   />
                   <div className="absolute top-4 right-4">
                     <motion.button
+                      onClick={() => handleToggleFavorite(product)} // Call the new function
                       whileHover={{ scale: 1.1 }}
                       whileTap={{ scale: 0.9 }}
-                      className="p-2 bg-white rounded-full shadow-md"
+                      className={`p-2 rounded-full shadow-md ${favorites.some(item => item.id === product.id) ? 'bg-red-500' : 'bg-white'}`} // Change color if favorite
                     >
                       <Heart className="w-5 h-5 text-gray-600" />
                     </motion.button>

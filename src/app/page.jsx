@@ -28,7 +28,7 @@ export default function Page() {
       name: "Nivea Q10",
       price: 4500,
       oldPrice: 2500,
-      image: "/images (1).jpeg",
+      image: "https://www.smallflower.com/cdn/shop/files/nivea-q10-power-anti-wrinkle-regen-night-cream-2024.png?v=1705691182&width=1946",
       color: "#4A90E2",
     },
     {
@@ -36,7 +36,7 @@ export default function Page() {
       name: "Valina Body Lotion",
       price: 8000.0,
       oldPrice: 6000.0,
-      image: "/Valina.jpeg",
+      image: "https://www.skinnydiplondon.com/cdn/shop/files/vanilla-body-lotion-275-ml-body-care-skinnydip-london-30628563124311.jpg?v=1692793871",
       color: "#50E3C2",
     },
     {
@@ -44,7 +44,7 @@ export default function Page() {
       name: "Barty",
       price: 6000,
       oldPrice: 3000,
-      image: "/barty.jpeg",
+      image: "https://themadon.com/wp-content/uploads/2022/01/bettina-barty-bodylotion-vanilla.png",
       color: "#F5A623",
     },
     {
@@ -52,7 +52,7 @@ export default function Page() {
       name: "Derma",
       price: 2000,
       oldPrice: 2000,
-      image: "/derma.jpeg",
+      image: "https://megaremedy.com/wp-content/uploads/2160-8557.jpeg",
       color: "#D0021B",
     },
   ];
@@ -126,13 +126,13 @@ export default function Page() {
               }}
               transition={{ duration: 1, ease: "easeInOut" }}
             >
-              <div className="relative h-full w-full">
+              <div className="relative h-full grid content-center w-full">
               <Image
                   src={product.image}
-                  width={700} 
-                  height={400} 
+                  width={7000} 
+                  height={4000} 
                   alt={product.name}
-                  className="rounded-lg object-cover filter brightness-95" 
+                  className="rounded-lg w-full  h-full brightness-95" 
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent" />
               </div>
