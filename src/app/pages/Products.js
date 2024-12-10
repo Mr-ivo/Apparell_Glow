@@ -47,60 +47,74 @@ export default function Products() {
   };
 
   const handleSave = async () => {
+    if (
+      !currentProduct.name ||
+      !currentProduct.description ||
+      !currentProduct.price ||
+      !currentProduct.stockQuantity ||
+      !currentProduct.categoryId ||
+      !currentProduct.image
+    ) {
+      alert('All fields are required.');
+      return;
+    }
+
+    const formData = new FormData();
+    formData.append('name', currentProduct.name);
+    formData.append('description', currentProduct.description);
+    formData.append('price', currentProduct.price);
+    formData.append('stockQuantity', currentProduct.stockQuantity);
+    formData.append('categoryId', currentProduct.categoryId);
+    formData.append('image', currentProduct.image);
+
     try {
-      if (!currentProduct.name || 
-          !currentProduct.description || 
-          !currentProduct.price || 
-          !currentProduct.stockQuantity || 
-          !currentProduct.categoryId || 
-          !currentProduct.image) {
-        alert('Please fill in all required fields.');
-        return;
-      }
-  
-      const formData = new FormData();
-      formData.append('name', currentProduct.name);
-      formData.append('description', currentProduct.description);
-      formData.append('price', currentProduct.price);
-      formData.append('stockQuantity', currentProduct.stockQuantity);
-      formData.append('categoryId', currentProduct.categoryId);
-      formData.append('image', currentProduct.image);
-  
-      const response = await fetch('https://glow-backend-2nxl.onrender.com/api/products', {
-        method: 'POST',
+      const endpoint = editMode
+        ? `https://glow-backend-2nxl.onrender.com/api/products/${currentProduct._id}`
+        : 'https://glow-backend-2nxl.onrender.com/api/products';
+      const method = editMode ? 'PUT' : 'POST';
+
+      const response = await fetch(endpoint, {
+        method,
         body: formData,
       });
-  
+
       const responseData = await response.json();
       if (!response.ok) {
-        console.error('Response Error:', responseData);
-        throw new Error(responseData.error || 'Failed to add product. Please check the input data and try again.');
+        throw new Error(responseData.error || 'Failed to save product');
       }
-  
-      const newProduct = responseData;
-      setProducts([...products, newProduct]);
+
+      if (editMode) {
+        setProducts(
+          products.map((product) =>
+            product._id === currentProduct._id ? responseData : product
+          )
+        );
+      } else {
+        setProducts([...products, responseData]);
+      }
+
       resetForm();
     } catch (err) {
-      console.error('Error Details:', err);
-      alert('An error occurred while saving the product: ' + err.message);
+      alert('Error saving product: ' + err.message);
     }
   };
-  
 
   const handleDelete = async (id) => {
     try {
-      const response = await fetch(`https://glow-backend-2nxl.onrender.com/api/products/${id}`, {
-        method: 'DELETE',
-      });
+      const response = await fetch(
+        `https://glow-backend-2nxl.onrender.com/api/products/${id}`,
+        {
+          method: 'DELETE',
+        }
+      );
 
       if (!response.ok) {
-        throw new Error('Failed to delete product. Please try again.');
+        throw new Error('Failed to delete product');
       }
 
       setProducts(products.filter((product) => product._id !== id));
     } catch (err) {
-      console.error(err.message);
-      alert('An error occurred while deleting the product: ' + err.message);
+      alert('Error deleting product: ' + err.message);
     }
   };
 
@@ -122,6 +136,7 @@ export default function Products() {
     });
     setImagePreview('');
     setShowModal(false);
+    setEditMode(false);
   };
 
   if (loading) {
