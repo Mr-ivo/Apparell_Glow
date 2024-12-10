@@ -1,6 +1,6 @@
-"use client";
-import { useState, useEffect } from "react";
-import { Pencil, Trash, PlusCircle } from "lucide-react";
+'use client';
+import { useState, useEffect } from 'react';
+import { Pencil, Trash, PlusCircle } from 'lucide-react';
 
 export default function Products() {
   const [products, setProducts] = useState([]);
@@ -9,24 +9,22 @@ export default function Products() {
   const [showModal, setShowModal] = useState(false);
   const [editMode, setEditMode] = useState(false);
   const [currentProduct, setCurrentProduct] = useState({
-    name: "",
-    description: "",
-    price: "",
-    stockQuantity: "",
-    categoryId: "",
-    image: ""
+    name: '',
+    description: '',
+    price: '',
+    stockQuantity: '',
+    categoryId: '',
+    image: null,
   });
-  const [imagePreview, setImagePreview] = useState("");
+  const [imagePreview, setImagePreview] = useState('');
 
   useEffect(() => {
     const fetchProducts = async () => {
       try {
         setLoading(true);
-        const response = await fetch(
-          "https://glow-backend-2nxl.onrender.com/api/products"
-        );
+        const response = await fetch('https://glow-backend-2nxl.onrender.com/api/products');
         if (!response.ok) {
-          throw new Error("Failed to fetch products");
+          throw new Error('Failed to fetch products');
         }
         const data = await response.json();
         setProducts(data);
@@ -48,8 +46,7 @@ export default function Products() {
     }
   };
 
-  const handleSave = async (e) => {
-    e.preventDefault();
+  const handleSave = async () => {
     if (
       !currentProduct.name ||
       !currentProduct.description ||
@@ -58,23 +55,23 @@ export default function Products() {
       !currentProduct.categoryId ||
       !currentProduct.image
     ) {
-      alert("All fields are required.");
+      alert('All fields are required.');
       return;
     }
 
     const formData = new FormData();
-    formData.append("name", currentProduct.name);
-    formData.append("description", currentProduct.description);
-    formData.append("price", currentProduct.price);
-    formData.append("stockQuantity", currentProduct.stockQuantity);
-    formData.append("categoryId", currentProduct.categoryId);
-    formData.append('image', imageFile);
+    formData.append('name', currentProduct.name);
+    formData.append('description', currentProduct.description);
+    formData.append('price', currentProduct.price);
+    formData.append('stockQuantity', currentProduct.stockQuantity);
+    formData.append('categoryId', currentProduct.categoryId);
+    formData.append('image', currentProduct.image);
 
     try {
       const endpoint = editMode
         ? `https://glow-backend-2nxl.onrender.com/api/products/${currentProduct._id}`
-        : "https://glow-backend-2nxl.onrender.com/api/products";
-      const method = editMode ? "PUT" : "POST";
+        : 'https://glow-backend-2nxl.onrender.com/api/products';
+      const method = editMode ? 'PUT' : 'POST';
 
       const response = await fetch(endpoint, {
         method,
@@ -83,7 +80,7 @@ export default function Products() {
 
       const responseData = await response.json();
       if (!response.ok) {
-        throw new Error(responseData.error || "Failed to save product");
+        throw new Error(responseData.error || 'Failed to save product');
       }
 
       if (editMode) {
@@ -98,7 +95,7 @@ export default function Products() {
 
       resetForm();
     } catch (err) {
-      alert("Error saving product: " + err.message);
+      alert('Error saving product: ' + err.message);
     }
   };
 
@@ -107,17 +104,17 @@ export default function Products() {
       const response = await fetch(
         `https://glow-backend-2nxl.onrender.com/api/products/${id}`,
         {
-          method: "DELETE",
+          method: 'DELETE',
         }
       );
 
       if (!response.ok) {
-        throw new Error("Failed to delete product");
+        throw new Error('Failed to delete product');
       }
 
       setProducts(products.filter((product) => product._id !== id));
     } catch (err) {
-      alert("Error deleting product: " + err.message);
+      alert('Error deleting product: ' + err.message);
     }
   };
 
@@ -130,24 +127,20 @@ export default function Products() {
 
   const resetForm = () => {
     setCurrentProduct({
-      name: "",
-      description: "",
-      price: "",
-      stockQuantity: "",
-      categoryId: "",
+      name: '',
+      description: '',
+      price: '',
+      stockQuantity: '',
+      categoryId: '',
       image: null,
     });
-    setImagePreview("");
+    setImagePreview('');
     setShowModal(false);
     setEditMode(false);
   };
 
   if (loading) {
-    return (
-      <div className="text-center text-gray-700 dark:text-gray-300">
-        Loading...
-      </div>
-    );
+    return <div className="text-center text-gray-700 dark:text-gray-300">Loading...</div>;
   }
 
   if (error) {
@@ -157,9 +150,7 @@ export default function Products() {
   return (
     <div className="min-h-screen bg-gray-100 dark:bg-gray-900 px-6 py-8">
       <div className="flex justify-between items-center mb-6">
-        <h1 className="text-2xl font-bold text-gray-800 dark:text-white">
-          Products
-        </h1>
+        <h1 className="text-2xl font-bold text-gray-800 dark:text-white">Products</h1>
         <button
           onClick={() => {
             setEditMode(false);
@@ -175,47 +166,23 @@ export default function Products() {
         <table className="min-w-full">
           <thead>
             <tr>
-              <th className="py-2 px-4 border-b text-left text-gray-600 dark:text-gray-300">
-                Name
-              </th>
-              <th className="py-2 px-4 border-b text-left text-gray-600 dark:text-gray-300">
-                Description
-              </th>
-              <th className="py-2 px-4 border-b text-left text-gray-600 dark:text-gray-300">
-                Price
-              </th>
-              <th className="py-2 px-4 border-b text-left text-gray-600 dark:text-gray-300">
-                Stock
-              </th>
-              <th className="py-2 px-4 border-b text-left text-gray-600 dark:text-gray-300">
-                Image
-              </th>
-              <th className="py-2 px-4 border-b text-left text-gray-600 dark:text-gray-300">
-                Actions
-              </th>
+              <th className="py-2 px-4 border-b text-left text-gray-600 dark:text-gray-300">Name</th>
+              <th className="py-2 px-4 border-b text-left text-gray-600 dark:text-gray-300">Description</th>
+              <th className="py-2 px-4 border-b text-left text-gray-600 dark:text-gray-300">Price</th>
+              <th className="py-2 px-4 border-b text-left text-gray-600 dark:text-gray-300">Stock</th>
+              <th className="py-2 px-4 border-b text-left text-gray-600 dark:text-gray-300">Image</th>
+              <th className="py-2 px-4 border-b text-left text-gray-600 dark:text-gray-300">Actions</th>
             </tr>
           </thead>
           <tbody>
             {products.map((product) => (
               <tr key={product._id}>
-                <td className="py-2 px-4 border-b text-gray-800 dark:text-gray-100">
-                  {product.name}
-                </td>
-                <td className="py-2 px-4 border-b text-gray-800 dark:text-gray-100">
-                  {product.description}
-                </td>
-                <td className="py-2 px-4 border-b text-gray-800 dark:text-gray-100">
-                  ${product.price}
-                </td>
-                <td className="py-2 px-4 border-b text-gray-800 dark:text-gray-100">
-                  {product.stockQuantity}
-                </td>
+                <td className="py-2 px-4 border-b text-gray-800 dark:text-gray-100">{product.name}</td>
+                <td className="py-2 px-4 border-b text-gray-800 dark:text-gray-100">{product.description}</td>
+                <td className="py-2 px-4 border-b text-gray-800 dark:text-gray-100">${product.price}</td>
+                <td className="py-2 px-4 border-b text-gray-800 dark:text-gray-100">{product.stockQuantity}</td>
                 <td className="py-2 px-4 border-b">
-                  <img
-                    src={product.image}
-                    alt={product.name}
-                    className="w-12 h-12 object-cover rounded-md"
-                  />
+                  <img src={product.image} alt={product.name} className="w-12 h-12 object-cover rounded-md" />
                 </td>
                 <td className="py-2 px-4 border-b">
                   <button
@@ -240,73 +207,52 @@ export default function Products() {
       {showModal && (
         <div className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center z-30">
           <div className="bg-white dark:bg-gray-800 p-6 rounded-lg w-96">
-            <h2 className="text-2xl font-semibold mb-4">
-              {editMode ? "Edit Product" : "Add Product"}
-            </h2>
+            <h2 className="text-2xl font-semibold mb-4">{editMode ? 'Edit Product' : 'Add Product'}</h2>
             <form
-              onSubmit={handleSave} 
-              encType="multipart/form-data"
+              onSubmit={(e) => {
+                e.preventDefault();
+                handleSave();
+              }}
+              enctype = "multipart/form-data"
             >
+
+              en
               <div className="mb-4">
-                <label
-                  htmlFor="name"
-                  className="block text-sm text-gray-600 dark:text-gray-300"
-                >
+                <label htmlFor="name" className="block text-sm text-gray-600 dark:text-gray-300">
                   Name
                 </label>
                 <input
                   id="name"
                   type="text"
                   value={currentProduct.name}
-                  onChange={(e) =>
-                    setCurrentProduct({
-                      ...currentProduct,
-                      name: e.target.value,
-                    })
-                  }
+                  onChange={(e) => setCurrentProduct({ ...currentProduct, name: e.target.value })}
                   className="w-full p-2 border rounded-lg"
                   required
                 />
               </div>
 
               <div className="mb-4">
-                <label
-                  htmlFor="description"
-                  className="block text-sm text-gray-600 dark:text-gray-300"
-                >
+                <label htmlFor="description" className="block text-sm text-gray-600 dark:text-gray-300">
                   Description
                 </label>
                 <textarea
                   id="description"
                   value={currentProduct.description}
-                  onChange={(e) =>
-                    setCurrentProduct({
-                      ...currentProduct,
-                      description: e.target.value,
-                    })
-                  }
+                  onChange={(e) => setCurrentProduct({ ...currentProduct, description: e.target.value })}
                   className="w-full p-2 border rounded-lg"
                   required
                 ></textarea>
               </div>
 
               <div className="mb-4">
-                <label
-                  htmlFor="price"
-                  className="block text-sm text-gray-600 dark:text-gray-300"
-                >
+                <label htmlFor="price" className="block text-sm text-gray-600 dark:text-gray-300">
                   Price
                 </label>
                 <input
                   id="price"
                   type="number"
                   value={currentProduct.price}
-                  onChange={(e) =>
-                    setCurrentProduct({
-                      ...currentProduct,
-                      price: e.target.value,
-                    })
-                  }
+                  onChange={(e) => setCurrentProduct({ ...currentProduct, price: e.target.value })}
                   className="w-full p-2 border rounded-lg"
                   min="0"
                   required
@@ -314,22 +260,14 @@ export default function Products() {
               </div>
 
               <div className="mb-4">
-                <label
-                  htmlFor="stockQuantity"
-                  className="block text-sm text-gray-600 dark:text-gray-300"
-                >
+                <label htmlFor="stockQuantity" className="block text-sm text-gray-600 dark:text-gray-300">
                   Stock Quantity
                 </label>
                 <input
                   id="stockQuantity"
                   type="number"
                   value={currentProduct.stockQuantity}
-                  onChange={(e) =>
-                    setCurrentProduct({
-                      ...currentProduct,
-                      stockQuantity: e.target.value,
-                    })
-                  }
+                  onChange={(e) => setCurrentProduct({ ...currentProduct, stockQuantity: e.target.value })}
                   className="w-full p-2 border rounded-lg"
                   min="0"
                   required
@@ -337,32 +275,21 @@ export default function Products() {
               </div>
 
               <div className="mb-4">
-                <label
-                  htmlFor="categoryId"
-                  className="block text-sm text-gray-600 dark:text-gray-300"
-                >
+                <label htmlFor="categoryId" className="block text-sm text-gray-600 dark:text-gray-300">
                   Category ID
                 </label>
                 <input
                   id="categoryId"
                   type="text"
                   value={currentProduct.categoryId}
-                  onChange={(e) =>
-                    setCurrentProduct({
-                      ...currentProduct,
-                      categoryId: e.target.value,
-                    })
-                  }
+                  onChange={(e) => setCurrentProduct({ ...currentProduct, categoryId: e.target.value })}
                   className="w-full p-2 border rounded-lg"
                   required
                 />
               </div>
 
               <div className="mb-4">
-                <label
-                  htmlFor="image"
-                  className="block text-sm text-gray-600 dark:text-gray-300"
-                >
+                <label htmlFor="image" className="block text-sm text-gray-600 dark:text-gray-300">
                   Image
                 </label>
                 <input
