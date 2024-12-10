@@ -214,6 +214,7 @@ export default function Products() {
                 handleSave();
               }}
             >
+                encType="multipart/form-data"
               <div className="mb-4">
                 <label htmlFor="name" className="block text-sm text-gray-600 dark:text-gray-300">
                   Name
