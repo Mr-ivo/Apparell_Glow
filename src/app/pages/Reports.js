@@ -54,8 +54,6 @@ export default function Reports() {
           </button>
         ))}
       </div>
-
-      {/* Metrics */}
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
         {metrics.map((metric, idx) => (
           <div
@@ -72,8 +70,6 @@ export default function Reports() {
           </div>
         ))}
       </div>
-
-      {/* Sales Chart */}
       <div className="bg-white dark:bg-gray-800 shadow-lg rounded-lg p-6 mb-8">
         <h3 className="text-xl font-bold text-gray-800 dark:text-white mb-4">Revenue Trend</h3>
         <Bar
@@ -85,11 +81,9 @@ export default function Reports() {
             },
             scales: {
               x: {
-                // This registers the x-axis to use the CategoryScale
                 type: 'category',
               },
               y: {
-                // This registers the y-axis to use the LinearScale
                 type: 'linear',
                 beginAtZero: true,
               },
@@ -98,7 +92,6 @@ export default function Reports() {
         />
       </div>
 
-      {/* Top-Selling Products */}
       <div className="bg-white dark:bg-gray-800 shadow-lg rounded-lg p-6">
         <h3 className="text-xl font-bold text-gray-800 dark:text-white mb-4">Top-Selling Products</h3>
         <ul>

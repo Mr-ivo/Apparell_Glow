@@ -54,40 +54,45 @@ export default function Products() {
       formData.append('price', currentProduct.price);
       formData.append('stockQuantity', currentProduct.stockQuantity);
       formData.append('categoryId', currentProduct.categoryId);
-
+  
       if (currentProduct.image) {
         formData.append('image', currentProduct.image);
       }
-
+  
       const response = await fetch('https://glow-backend-2nxl.onrender.com/api/products', {
         method: 'POST',
         body: formData,
       });
-
+  
       if (!response.ok) {
-        throw new Error('Failed to add product. Please check the input data and try again.');
+        const errorData = await response.json();
+        throw new Error(errorData.error || 'Failed to add product. Please check the input data and try again.');
       }
-
+  
       const newProduct = await response.json();
       setProducts([...products, newProduct]);
-
-      setShowModal(false);
-      setCurrentProduct({
-        name: '',
-        description: '',
-        price: '',
-        stockQuantity: '',
-        categoryId: '',
-        image: null,
-      });
-      setImagePreview('');
-      setEditMode(false);
+      
+      resetForm();
     } catch (err) {
       console.error(err.message);
       alert('An error occurred while saving the product: ' + err.message);
     }
   };
-
+  
+  const resetForm = () => {
+    setShowModal(false);
+    setCurrentProduct({
+      name: '',
+      description: '',
+      price: '',
+      stockQuantity: '',
+      categoryId: '',
+      image: null,
+    });
+    setImagePreview('');
+    setEditMode(false);
+  };
+  
   const handleDelete = async (id) => {
     try {
       const response = await fetch(`https://glow-backend-2nxl.onrender.com/api/products/${id}`, {
