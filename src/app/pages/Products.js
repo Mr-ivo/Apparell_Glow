@@ -48,7 +48,8 @@ export default function Products() {
     }
   };
 
-  const handleSave = async () => {
+  const handleSave = async (e) => {
+    e.preventDefault();
     if (
       !currentProduct.name ||
       !currentProduct.description ||
@@ -243,10 +244,7 @@ export default function Products() {
               {editMode ? "Edit Product" : "Add Product"}
             </h2>
             <form
-              onSubmit={(e) => {
-                e.preventDefault();
-                handleSave();
-              }}
+              onSubmit={handleSave} 
               encType="multipart/form-data"
             >
               <div className="mb-4">
