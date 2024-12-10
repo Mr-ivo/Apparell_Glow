@@ -51,7 +51,6 @@ export default function Products() {
       !currentProduct.description ||
       !currentProduct.price ||
       !currentProduct.stockQuantity ||
-      !currentProduct.categoryId ||
       !currentProduct.image
     ) {
       alert('All fields are required.');
@@ -63,7 +62,6 @@ export default function Products() {
     formData.append('description', currentProduct.description);
     formData.append('price', currentProduct.price);
     formData.append('stockQuantity', currentProduct.stockQuantity);
-    formData.append('categoryId', currentProduct.categoryId);
     formData.append('image', currentProduct.image);
 
     try {
@@ -130,7 +128,6 @@ export default function Products() {
       description: '',
       price: '',
       stockQuantity: '',
-      categoryId: '',
       image: null,
     });
     setImagePreview('');
@@ -272,7 +269,7 @@ export default function Products() {
                   required
                 />
               </div>
-              
+
               <div className="mb-4">
                 <label htmlFor="image" className="block text-sm text-gray-600 dark:text-gray-300">
                   Image
