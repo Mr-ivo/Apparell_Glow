@@ -1,45 +1,84 @@
-// src/app/pages/Customers.jsx
-
 'use client';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Pencil, Trash, PlusCircle } from 'lucide-react';
 
-const initialUsers = [
-  { id: 1, name: 'John Doe', email: 'john@example.com', phone: '123-456-7890' },
-  { id: 2, name: 'Jane Smith', email: 'jane@example.com', phone: '234-567-8901' },
-  { id: 3, name: 'Bob Johnson', email: 'bob@example.com', phone: '345-678-9012' },
-];
-
 export default function Customers() {
-  const [users, setUsers] = useState(initialUsers);
+  const [users, setUsers] = useState([]);
   const [showModal, setShowModal] = useState(false);
   const [editMode, setEditMode] = useState(false);
-  const [currentUser, setCurrentUser] = useState({ name: '', email: '', phone: '' });
+  const [currentUser, setCurrentUser] = useState({ username: '', email: '', password: '' });
 
-  // Function to handle adding or updating users
-  const handleSave = () => {
-    if (editMode) {
-      const updatedUsers = users.map((user) =>
-        user.id === currentUser.id ? currentUser : user
-      );
-      setUsers(updatedUsers);
-    } else {
-      setUsers([
-        ...users,
-        { id: users.length + 1, name: currentUser.name, email: currentUser.email, phone: currentUser.phone },
-      ]);
+  useEffect(() => {
+    fetchUsers();
+  }, []);
+
+  const fetchUsers = async () => {
+    try {
+      const response = await fetch('https://glow-backend-2nxl.onrender.com/api/users');
+      const data = await response.json();
+      setUsers(data);
+    } catch (error) {
+      console.error('Error fetching users:', error);
     }
-    setShowModal(false);
-    setCurrentUser({ name: '', email: '', phone: '' });
-    setEditMode(false);
   };
 
-  // Function to handle deleting a user
-  const handleDelete = (id) => {
-    setUsers(users.filter((user) => user.id !== id));
+  const handleSave = async () => {
+    if (!currentUser.username || !currentUser.email || !currentUser.password) {
+      alert('All fields are required!');
+      return;
+    }
+
+    try {
+      const endpoint = editMode
+        ? `https://glow-backend-2nxl.onrender.com/api/users/${currentUser._id}`
+        : `https://glow-backend-2nxl.onrender.com/api/users`;
+
+      const method = editMode ? 'PUT' : 'POST';
+      const response = await fetch(endpoint, {
+        method,
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(currentUser),
+      });
+
+      if (response.ok) {
+        fetchUsers();
+        setShowModal(false);
+        setCurrentUser({ username: '', email: '', password: '' });
+        setEditMode(false);
+      } else {
+        const error = await response.json();
+        console.error('Error saving user:', error);
+        alert('Failed to save user. Check the console for details.');
+      }
+    } catch (error) {
+      console.error('Error saving user:', error);
+      alert('An error occurred. Please try again.');
+    }
   };
 
-  // Function to handle opening the edit modal
+  const handleDelete = async (id) => {
+    if (!window.confirm('Are you sure you want to delete this user?')) return;
+
+    try {
+      const response = await fetch(`https://glow-backend-2nxl.onrender.com/api/users/${id}`, {
+        method: 'DELETE',
+      });
+
+      if (response.ok) {
+        fetchUsers(); // Refresh users
+      } else {
+        const error = await response.json();
+        console.error('Error deleting user:', error);
+        alert('Failed to delete user. Check the console for details.');
+      }
+    } catch (error) {
+      console.error('Error deleting user:', error);
+      alert('An error occurred. Please try again.');
+    }
+  };
+
   const handleEdit = (user) => {
     setCurrentUser(user);
     setEditMode(true);
@@ -61,23 +100,21 @@ export default function Customers() {
         </button>
       </div>
 
-      {/* Table for displaying users */}
+      {/* User Table */}
       <div className="overflow-x-auto bg-white dark:bg-gray-800 rounded-lg shadow-lg">
         <table className="min-w-full">
           <thead>
             <tr>
-              <th className="py-2 px-4 border-b text-left text-gray-600 dark:text-gray-300">Name</th>
+              <th className="py-2 px-4 border-b text-left text-gray-600 dark:text-gray-300">Username</th>
               <th className="py-2 px-4 border-b text-left text-gray-600 dark:text-gray-300">Email</th>
-              <th className="py-2 px-4 border-b text-left text-gray-600 dark:text-gray-300">Phone</th>
               <th className="py-2 px-4 border-b text-left text-gray-600 dark:text-gray-300">Actions</th>
             </tr>
           </thead>
           <tbody>
             {users.map((user) => (
-              <tr key={user.id}>
-                <td className="py-2 px-4 border-b text-gray-800 dark:text-gray-100">{user.name}</td>
+              <tr key={user._id}>
+                <td className="py-2 px-4 border-b text-gray-800 dark:text-gray-100">{user.username}</td>
                 <td className="py-2 px-4 border-b text-gray-800 dark:text-gray-100">{user.email}</td>
-                <td className="py-2 px-4 border-b text-gray-800 dark:text-gray-100">{user.phone}</td>
                 <td className="py-2 px-4 border-b">
                   <button
                     onClick={() => handleEdit(user)}
@@ -86,7 +123,7 @@ export default function Customers() {
                     <Pencil className="w-5 h-5" />
                   </button>
                   <button
-                    onClick={() => handleDelete(user.id)}
+                    onClick={() => handleDelete(user._id)}
                     className="text-red-500 hover:text-red-600"
                   >
                     <Trash className="w-5 h-5" />
@@ -98,11 +135,11 @@ export default function Customers() {
         </table>
       </div>
 
-      {/* Modal for adding/editing a user */}
+      {/* Modal for Add/Edit */}
       {showModal && (
         <div className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center z-30">
           <div className="bg-white dark:bg-gray-800 p-6 rounded-lg w-96">
-            <h2 className="text-2xl font-semibold mb-4">{editMode ? 'Edit Customer' : 'Add Customer'}</h2>
+            <h2 className="text-2xl font-semibold mb-4">{editMode ? 'Edit User' : 'Add User'}</h2>
             <form
               onSubmit={(e) => {
                 e.preventDefault();
@@ -110,15 +147,15 @@ export default function Customers() {
               }}
             >
               <div className="mb-4">
-                <label htmlFor="name" className="block text-sm text-gray-600 dark:text-gray-300">
-                  Name
+                <label htmlFor="username" className="block text-sm text-gray-600 dark:text-gray-300">
+                  Username
                 </label>
                 <input
-                  id="name"
+                  id="username"
                   type="text"
                   className="w-full mt-1 p-2 rounded-lg border border-gray-300 dark:border-gray-700 dark:bg-gray-900 dark:text-gray-200"
-                  value={currentUser.name}
-                  onChange={(e) => setCurrentUser({ ...currentUser, name: e.target.value })}
+                  value={currentUser.username}
+                  onChange={(e) => setCurrentUser({ ...currentUser, username: e.target.value })}
                   required
                 />
               </div>
@@ -136,15 +173,15 @@ export default function Customers() {
                 />
               </div>
               <div className="mb-4">
-                <label htmlFor="phone" className="block text-sm text-gray-600 dark:text-gray-300">
-                  Phone
+                <label htmlFor="password" className="block text-sm text-gray-600 dark:text-gray-300">
+                  Password
                 </label>
                 <input
-                  id="phone"
-                  type="text"
+                  id="password"
+                  type="password"
                   className="w-full mt-1 p-2 rounded-lg border border-gray-300 dark:border-gray-700 dark:bg-gray-900 dark:text-gray-200"
-                  value={currentUser.phone}
-                  onChange={(e) => setCurrentUser({ ...currentUser, phone: e.target.value })}
+                  value={currentUser.password}
+                  onChange={(e) => setCurrentUser({ ...currentUser, password: e.target.value })}
                   required
                 />
               </div>
@@ -160,7 +197,7 @@ export default function Customers() {
                   type="submit"
                   className="bg-blue-500 text-white py-2 px-4 rounded-lg hover:bg-blue-600"
                 >
-                  {editMode ? 'Save Changes' : 'Add Customer'}
+                  {editMode ? 'Save Changes' : 'Add User'}
                 </button>
               </div>
             </form>
