@@ -13,7 +13,6 @@ export default function Products() {
     description: '',
     price: '',
     stockQuantity: '',
-    categoryId: '',
     image: null,
   });
   const [imagePreview, setImagePreview] = useState('');
@@ -273,21 +272,7 @@ export default function Products() {
                   required
                 />
               </div>
-
-              <div className="mb-4">
-                <label htmlFor="categoryId" className="block text-sm text-gray-600 dark:text-gray-300">
-                  Category ID
-                </label>
-                <input
-                  id="categoryId"
-                  type="text"
-                  value={currentProduct.categoryId}
-                  onChange={(e) => setCurrentProduct({ ...currentProduct, categoryId: e.target.value })}
-                  className="w-full p-2 border rounded-lg"
-                  required
-                />
-              </div>
-
+              
               <div className="mb-4">
                 <label htmlFor="image" className="block text-sm text-gray-600 dark:text-gray-300">
                   Image
