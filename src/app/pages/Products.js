@@ -14,7 +14,7 @@ export default function Products() {
     price: "",
     stockQuantity: "",
     categoryId: "",
-    image: null,
+    image: ""
   });
   const [imagePreview, setImagePreview] = useState("");
 
@@ -67,7 +67,7 @@ export default function Products() {
     formData.append("price", currentProduct.price);
     formData.append("stockQuantity", currentProduct.stockQuantity);
     formData.append("categoryId", currentProduct.categoryId);
-    formData.append("image", currentProduct.image);
+    formData.append('image', imageFile);
 
     try {
       const endpoint = editMode
