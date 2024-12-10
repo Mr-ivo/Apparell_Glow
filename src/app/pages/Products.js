@@ -63,18 +63,20 @@ export default function Products() {
         method: 'POST',
         body: formData,
       });
-  
+
+      const responseData = await response.json();
       if (!response.ok) {
-        const errorData = await response.json();
-        throw new Error(errorData.error || 'Failed to add product. Please check the input data and try again.');
+        console.error('Response Error:', responseData); 
+        throw new Error(responseData.error || 'Failed to add product. Please check the input data and try again.');
       }
   
-      const newProduct = await response.json();
+      const newProduct = responseData;
       setProducts([...products, newProduct]);
-      
+  
+     
       resetForm();
     } catch (err) {
-      console.error(err.message);
+      console.error('Error Details:', err);
       alert('An error occurred while saving the product: ' + err.message);
     }
   };
