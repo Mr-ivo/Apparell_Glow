@@ -44,7 +44,9 @@ export default function Products() {
       setImagePreview(URL.createObjectURL(file));
       setCurrentProduct({ ...currentProduct, image: file });
     }
-  };const handleSave = async () => {
+  };
+
+  const handleSave = async () => {
     try {
       if (!currentProduct.name || 
           !currentProduct.description || 
@@ -55,7 +57,7 @@ export default function Products() {
         alert('Please fill in all required fields.');
         return;
       }
-  
+
       const formData = new FormData();
       formData.append('name', currentProduct.name);
       formData.append('description', currentProduct.description);
@@ -63,7 +65,7 @@ export default function Products() {
       formData.append('stockQuantity', currentProduct.stockQuantity);
       formData.append('categoryId', currentProduct.categoryId);
       formData.append('image', currentProduct.image); 
-  
+
       console.log('Form Data:', {
         name: currentProduct.name,
         description: currentProduct.description,
@@ -72,29 +74,28 @@ export default function Products() {
         categoryId: currentProduct.categoryId,
         image: currentProduct.image,
       });
-  
+
       const response = await fetch('https://glow-backend-2nxl.onrender.com/api/products', {
         method: 'POST',
         body: formData,
       });
-  
+
       const responseData = await response.json();
       if (!response.ok) {
         console.error('Response Error:', responseData);
         throw new Error(responseData.message || 'Failed to add product. Please check the input data and try again.');
       }
-  
+
       const newProduct = responseData;
       setProducts([...products, newProduct]);
-  
+
       resetForm();
     } catch (err) {
       console.error('Error Details:', err);
       alert('An error occurred while saving the product: ' + err.message);
     }
   };
-  
-  
+
   const handleDelete = async (id) => {
     try {
       const response = await fetch(`https://glow-backend-2nxl.onrender.com/api/products/${id}`, {
@@ -117,6 +118,19 @@ export default function Products() {
     setImagePreview(product.image);
     setEditMode(true);
     setShowModal(true);
+  };
+
+  const resetForm = () => {
+    setCurrentProduct({
+      name: '',
+      description: '',
+      price: '',
+      stockQuantity: '',
+      categoryId: '',
+      image: null,
+    });
+    setImagePreview('');
+    setShowModal(false);
   };
 
   if (loading) {
