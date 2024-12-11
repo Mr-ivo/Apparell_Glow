@@ -1,4 +1,4 @@
-"use client";
+ "use client";
 import { useState, useEffect, useRef } from "react";
 import Image from "next/image";
 import Link from "next/link";
@@ -6,10 +6,15 @@ import { motion, useScroll, useTransform, useInView } from "framer-motion";
 import { useCart } from "./context/CartContext";
 import BackToTopButton from "./BackToTop/BackToTOP";
 import Footer from "./Footer/Footer";
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 export default function Page() {
   const { addToCart } = useCart();
   const [currentProduct, setCurrentProduct] = useState(0);
+  const [products, setProducts] = useState([]);
+  const [searchQuery, setSearchQuery] = useState(""); 
+  const [selectedFilter, setSelectedFilter] = useState(""); 
   const heroRef = useRef(null);
   const productsRef = useRef(null);
   const isProductsInView = useInView(productsRef, { once: true, amount: 0.2 });
@@ -22,55 +27,59 @@ export default function Page() {
   const y = useTransform(scrollYProgress, [0, 1], ["0%", "50%"]);
   const opacity = useTransform(scrollYProgress, [0, 1], [1, 0]);
 
-  const products = [
-    {
-      id: 1,
-      name: "Nivea Q10",
-      price: 4500,
-      oldPrice: 2500,
-      image: "https://www.smallflower.com/cdn/shop/files/nivea-q10-power-anti-wrinkle-regen-night-cream-2024.png?v=1705691182&width=1946",
-      color: "#4A90E2",
-    },
-    {
-      id: 2,
-      name: "Valina Body Lotion",
-      price: 8000.0,
-      oldPrice: 6000.0,
-      image: "https://www.skinnydiplondon.com/cdn/shop/files/vanilla-body-lotion-275-ml-body-care-skinnydip-london-30628563124311.jpg?v=1692793871",
-      color: "#50E3C2",
-    },
-    {
-      id: 3,
-      name: "Barty",
-      price: 6000,
-      oldPrice: 3000,
-      image: "https://themadon.com/wp-content/uploads/2022/01/bettina-barty-bodylotion-vanilla.png",
-      color: "#F5A623",
-    },
-    {
-      id: 4,
-      name: "Derma",
-      price: 2000,
-      oldPrice: 2000,
-      image: "https://megaremedy.com/wp-content/uploads/2160-8557.jpeg",
-      color: "#D0021B",
-    },
-  ];
+  useEffect(() => {
+    const fetchProducts = async () => {
+      try {
+        const response = await fetch("https://glow-backend-2nxl.onrender.com/api/products");
+        if (!response.ok) {
+          throw new Error("Failed to fetch products");
+        }
+        const data = await response.json();
+        setProducts(data);
+      } catch (error) {
+        console.error("Error fetching products:", error);
+      }
+    };
 
+    fetchProducts();
+  }, []);
+
+  
   useEffect(() => {
     const interval = setInterval(() => {
       setCurrentProduct((prev) => (prev + 1) % products.length);
     }, 5000);
     return () => clearInterval(interval);
-  }, []);
+  }, [products]);
+
+  const filteredProducts = products.filter(product => {
+    const matchesSearch = product.name.toLowerCase().includes(searchQuery.toLowerCase());
+    const matchesFilter = selectedFilter ? product.category === selectedFilter : true;
+    return matchesSearch && matchesFilter;
+  });
+
+  const handleAddToCart = (product) => {
+    addToCart(product);
+    toast.success(`${product.name} added to cart!`, {
+      position: "top-right",
+      autoClose: 3000,
+      hideProgressBar: true,
+      closeOnClick: true,
+      pauseOnHover: false,
+      draggable: true,
+      progress: undefined,
+    });
+  };
 
   return (
     <div className="min-h-screen bg-white dark:bg-gray-900 overflow-hidden">
+      <ToastContainer />
       <motion.section
         ref={heroRef}
         className="relative h-[70vh] flex flex-col md:flex-row"
         style={{ opacity }}
       >
+        {/* Hero Section */}
         <motion.div 
           className="w-full md:w-1/2 flex items-center justify-center p-8 bg-white dark:bg-gray-900"
           initial={{ x: -100, opacity: 0 }}
@@ -110,7 +119,6 @@ export default function Page() {
           </div>
         </motion.div>
 
-        {/* Right Side - Animated Image Carousel */}
         <motion.div 
           className="w-full md:w-1/2 relative h-full overflow-hidden"
           style={{ y }}
@@ -127,7 +135,7 @@ export default function Page() {
               transition={{ duration: 1, ease: "easeInOut" }}
             >
               <div className="relative h-full grid content-center w-full">
-              <Image
+                <Image
                   src={product.image}
                   width={7000} 
                   height={4000} 
@@ -141,7 +149,28 @@ export default function Page() {
         </motion.div>
       </motion.section>
 
-      {/* Featured Products Grid */}
+      <div className="py-4 px-4 flex items-center space-x-4">
+        <input
+          type="text"
+          placeholder="Search Products..."
+          value={searchQuery}
+          onChange={(e) => setSearchQuery(e.target.value)}
+          className="p-2 border border-gray-300 rounded-md dark:bg-gray-800 dark:text-white w-64"
+        />
+        <select
+          value={selectedFilter}
+          onChange={(e) => setSelectedFilter(e.target.value)}
+          className="p-2 border border-gray-300 rounded-md dark:bg-gray-800 dark:text-white"
+        >
+          <option value="">All Categories</option>
+          {["soap", "perfumes", "glycolic", "tube body lotions"].map(category => (
+            <option key={category} value={category}>
+              {category}
+            </option>
+          ))}
+        </select>
+      </div>
+
       <motion.section
         ref={productsRef}
         className="py-16 px-4 bg-gray-50 dark:bg-gray-800"
@@ -159,7 +188,7 @@ export default function Page() {
             Featured Products
           </motion.h2>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-            {products.map((product, index) => (
+            {filteredProducts.slice(0, 8).map((product, index) => (
               <motion.div
                 key={product.id}
                 initial={{ opacity: 0, y: 30 }}
@@ -192,7 +221,7 @@ export default function Page() {
                   <motion.button
                     whileHover={{ scale: 1.05 }}
                     whileTap={{ scale: 0.95 }}
-                    onClick={() => addToCart(product)}
+                    onClick={() => handleAddToCart(product)} 
                     className="w-full bg-black dark:bg-white text-white dark:text-black py-2 rounded-lg
                       transition-colors duration-300 hover:bg-gray-800 dark:hover:bg-gray-200"
                   >
@@ -205,63 +234,8 @@ export default function Page() {
         </div>
       </motion.section>
 
-      {/* Product Showcase Section */}
-      <motion.section className="py-16 px-4">
-        <div className="max-w-7xl mx-auto">
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
-            <motion.div
-              initial={{ x: -50, opacity: 0 }}
-              whileInView={{ x: 0, opacity: 1 }}
-              transition={{ duration: 0.8 }}
-              className="relative"
-            >
-              <div className="relative h-[500px] rounded-2xl overflow-hidden">
-                <Image
-                  src={products[currentProduct].image}
-                  layout="fill"
-                  objectFit="cover"
-                  alt={products[currentProduct].name}
-                  className="transition-transform duration-700 hover:scale-105"
-                />
-              </div>
-              <motion.div
-                className="absolute bottom-0 left-0 right-0 h-2"
-                initial={{ width: "0%" }}
-                animate={{ width: "100%" }}
-                transition={{ duration: 5, repeat: Infinity }}
-                style={{ backgroundColor: products[currentProduct].color }}  //representing the infinity line 
-              />
-            </motion.div>
-
-            <motion.div
-              initial={{ x: 50, opacity: 0 }}
-              whileInView={{ x: 0, opacity: 1 }}
-              transition={{ duration: 0.8 }}
-              className="space-y-6"
-            >
-              <h2 className="text-3xl md:text-4xl font-bold dark:text-white">
-                {products[currentProduct].name}
-              </h2>
-              <p className="text-lg text-gray-600 dark:text-gray-300">
-                Experience the power of nature with our premium skincare products.
-                Each product is carefully formulated to enhance your natural beauty.
-              </p>
-              <motion.button
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.95 }}
-                onClick={() => addToCart(products[currentProduct])}
-                className="px-8 py-3 bg-black dark:bg-white text-white dark:text-black rounded-full
-                  text-lg font-semibold transition-all duration-300"
-              >
-                Add to Cart
-              </motion.button>
-            </motion.div>
-          </div>
-        </div>
-      </motion.section>
-
-      <BackToTopButton />
       <Footer />
+      <BackToTopButton />
     </div>
   );
 }

@@ -3,12 +3,12 @@ const nextConfig = {
     images:{
         
         domains:[
-            "www.smallflower.com",
-            "www.skinnydiplondon.com",
-            "themadon.com",
-            "megaremedy.com",
-            "www.meagherspharmacy.ie",
-            "jnj-content-lab2.brightspotcdn.com"
+            "m.media-amazon.com",
+            "glow-backend-2nxl.onrender.com",
+            "static.beautytocare.com",
+            "www.ceraveindia.com",
+            "encrypted-tbn0.gstatic.com",
+            "armanigallery.com.au"
         ],
        
     }

@@ -1,33 +1,26 @@
-'use client'
+'use client';
 import React, { createContext, useContext, useState, useCallback } from 'react';
 import { toast } from 'react-hot-toast';
 
-// Create the context
 const CartContext = createContext(undefined);
 
-// Define the initial cart state
-const initialState = {
-  cartItems: [],
-  addToCart: () => {},
-  removeFromCart: () => {},
-  getTotalPrice: () => 0,
-  clearCart: () => {},
-};
-
-// Create the provider component
 export function CartProvider({ children }) {
   const [cartItems, setCartItems] = useState([]);
 
   const addToCart = useCallback((product) => {
     setCartItems((prevItems) => {
-      // Check if item already exists in cart
+
       const existingItem = prevItems.find(item => item.id === product.id);
       if (existingItem) {
-        toast.error('Item already in cart');
-        return prevItems;
+        const updatedItems = prevItems.map(item => 
+          item.id === product.id ? { ...item, quantity: (item.quantity || 1) + 1 } : item
+        );
+        toast.success('Increased quantity in cart!');
+        return updatedItems;
       }
+
       toast.success('Added to cart!');
-      return [...prevItems, product];
+      return [...prevItems, { ...product, quantity: 1 }];
     });
   }, []);
 
@@ -37,7 +30,7 @@ export function CartProvider({ children }) {
   }, []);
 
   const getTotalPrice = useCallback(() => {
-    return cartItems.reduce((total, item) => total + item.price, 0);
+    return cartItems.reduce((total, item) => total + (item.price * (item.quantity || 1)), 0);
   }, [cartItems]);
 
   const clearCart = useCallback(() => {
@@ -60,7 +53,6 @@ export function CartProvider({ children }) {
   );
 }
 
-// Create the hook to use the cart context
 export function useCart() {
   const context = useContext(CartContext);
   if (context === undefined) {
@@ -68,5 +60,3 @@ export function useCart() {
   }
   return context;
 }
-
-

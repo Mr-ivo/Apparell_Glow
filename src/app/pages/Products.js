@@ -211,8 +211,6 @@ export default function Products() {
               }}
               enctype = "multipart/form-data"
             >
-
-              en
               <div className="mb-4">
                 <label htmlFor="name" className="block text-sm text-gray-600 dark:text-gray-300">
                   Name
