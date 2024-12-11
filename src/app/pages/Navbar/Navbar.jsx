@@ -169,7 +169,6 @@ const Navbar = () => {
               <span className="text-black dark:text-white">ApparellGlow</span>
             </Link>
 
-            {/* Desktop Navigation */}
             <nav className="hidden md:flex items-center space-x-8">
               {navLinks.map(({ href, label }) => (
                 <Link
@@ -187,7 +186,6 @@ const Navbar = () => {
               ))}
             </nav>
 
-            {/* Right Side Controls */}
             <div className="flex items-center space-x-4">
               <button
                 onClick={toggleTheme}
@@ -208,7 +206,7 @@ const Navbar = () => {
               >
                 <Link 
                   href="/cart" 
-                  className="relative p-2 rounded-full transition-all duration-300 hover:bg-gray-100 dark:hover:bg-gray-800"
+                  className="relative p-2 rounded-full transition-all duration-300 dark:hover:bg-gray-800"
                 >
                   <ShoppingCart className="w-5 h-5 text-black dark:text-white" />
                   <AnimatePresence>
@@ -241,7 +239,6 @@ const Navbar = () => {
             </div>
           </div>
 
-          {/* Mobile Navigation */}
           {isMenuOpen && (
             <div className="md:hidden menu-slide-down">
               <div className="px-2 pt-2 pb-3 space-y-1">

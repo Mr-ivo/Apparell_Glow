@@ -37,7 +37,7 @@ const itemVariants = {
 export default function CartPage() {
   const { cartItems, removeFromCart, getTotalPrice } = useCart();
   const shipping = 2000;
-  const total = getTotalPrice() || 0; // Ensure total is a number
+  const total = getTotalPrice() || 0;
   const finalTotal = total + shipping;
 
   return (
@@ -113,11 +113,11 @@ export default function CartPage() {
                           </h3>
                           <div className="mt-1 flex items-center gap-4">
                             <span className="text-lg font-bold text-blue-600 dark:text-blue-400">
-                              CAF {item.price.toFixed(2)} {/* Ensure price is formatted */}
+                              CAF {item.price.toFixed(2)} 
                             </span>
                             {item.oldPrice && (
                               <span className="text-sm text-gray-400 line-through">
-                                CAF {item.oldPrice.toFixed(2)} {/* Ensure old price is formatted */}
+                                CAF {item.oldPrice.toFixed(2)}
                               </span>
                             )}
                           </div>
@@ -150,7 +150,7 @@ export default function CartPage() {
                   <div className="space-y-3 mb-6">
                     <div className="flex justify-between text-gray-600 dark:text-gray-300">
                       <span>Subtotal</span>
-                      <span>CAF {total.toFixed(2)}</span> {/* Ensure total is formatted */}
+                      <span>CAF {total.toFixed(2)}</span> 
                     </div>
                     <div className="flex justify-between text-gray-600 dark:text-gray-300">
                       <span>Shipping</span>

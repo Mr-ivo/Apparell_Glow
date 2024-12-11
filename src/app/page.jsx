@@ -79,7 +79,6 @@ export default function Page() {
         className="relative h-[70vh] flex flex-col md:flex-row"
         style={{ opacity }}
       >
-        {/* Hero Section */}
         <motion.div 
           className="w-full md:w-1/2 flex items-center justify-center p-8 bg-white dark:bg-gray-900"
           initial={{ x: -100, opacity: 0 }}
@@ -218,6 +217,7 @@ export default function Page() {
                       </span>
                     </div>
                   </div>
+                  
                   <motion.button
                     whileHover={{ scale: 1.05 }}
                     whileTap={{ scale: 0.95 }}
