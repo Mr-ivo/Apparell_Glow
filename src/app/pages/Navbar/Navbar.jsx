@@ -16,7 +16,6 @@ const Navbar = () => {
   const [isDarkMode, setIsDarkMode] = useState(false);
   const [isCartHovered, setIsCartHovered] = useState(false);
   
-  // Get cart items from context
   const { cartItems } = useCart();
 
   useEffect(() => {
@@ -61,7 +60,6 @@ const Navbar = () => {
     { href: '/contact', label: 'Contact' },
   ];
 
-  // Cart Preview Component
   const CartPreview = () => {
     if (cartItems.length === 0) return null;
     
@@ -227,7 +225,7 @@ const Navbar = () => {
 
               <button
                 onClick={toggleMenu}
-                className="md:hidden p-2 rounded-lg transition-all duration-300 hover:bg-gray-100 dark:hover:bg-gray-800"
+                className="md:hidden p-2 rounded-lg transition-all duration-300 hover:bg-gray-100 "
                 aria-label="Toggle menu"
               >
                 {isMenuOpen ? (

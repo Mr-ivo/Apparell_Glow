@@ -16,6 +16,7 @@ export default function Products() {
     image: null,
   });
   const [imagePreview, setImagePreview] = useState('');
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
   useEffect(() => {
     const fetchProducts = async () => {
@@ -39,9 +40,11 @@ export default function Products() {
 
   const handleImageChange = (e) => {
     const file = e.target.files[0];
-    if (file) {
+    if (file && file.type.startsWith('image/')) {
       setImagePreview(URL.createObjectURL(file));
       setCurrentProduct({ ...currentProduct, image: file });
+    } else {
+      alert('Please upload a valid image file.');
     }
   };
 
@@ -57,6 +60,11 @@ export default function Products() {
       return;
     }
 
+    if (currentProduct.price < 0 || currentProduct.stockQuantity < 0) {
+      alert('Price and stock quantity must be non-negative.');
+      return;
+    }
+
     const formData = new FormData();
     formData.append('name', currentProduct.name);
     formData.append('description', currentProduct.description);
@@ -65,6 +73,7 @@ export default function Products() {
     formData.append('image', currentProduct.image);
 
     try {
+      setIsSubmitting(true);
       const endpoint = editMode
         ? `https://glow-backend-2nxl.onrender.com/api/products/${currentProduct._id}`
         : 'https://glow-backend-2nxl.onrender.com/api/products';
@@ -93,25 +102,29 @@ export default function Products() {
       resetForm();
     } catch (err) {
       alert('Error saving product: ' + err.message);
+    } finally {
+      setIsSubmitting(false);
     }
   };
 
   const handleDelete = async (id) => {
-    try {
-      const response = await fetch(
-        `https://glow-backend-2nxl.onrender.com/api/products/${id}`,
-        {
-          method: 'DELETE',
+    if (confirm('Are you sure you want to delete this product?')) {
+      try {
+        const response = await fetch(
+          `https://glow-backend-2nxl.onrender.com/api/products/${id}`,
+          {
+            method: 'DELETE',
+          }
+        );
+
+        if (!response.ok) {
+          throw new Error('Failed to delete product');
         }
-      );
 
-      if (!response.ok) {
-        throw new Error('Failed to delete product');
+        setProducts(products.filter((product) => product._id !== id));
+      } catch (err) {
+        alert('Error deleting product: ' + err.message);
       }
-
-      setProducts(products.filter((product) => product._id !== id));
-    } catch (err) {
-      alert('Error deleting product: ' + err.message);
     }
   };
 
@@ -209,7 +222,7 @@ export default function Products() {
                 e.preventDefault();
                 handleSave();
               }}
-              enctype = "multipart/form-data"
+              encType="multipart/form-data"
             >
               <div className="mb-4">
                 <label htmlFor="name" className="block text-sm text-gray-600 dark:text-gray-300">
@@ -298,8 +311,9 @@ export default function Products() {
                 <button
                   type="submit"
                   className="bg-blue-500 text-white py-2 px-4 rounded-lg hover:bg-blue-600"
+                  disabled={isSubmitting}
                 >
-                  Save
+                  {isSubmitting ? 'Saving...' : 'Save'}
                 </button>
               </div>
             </form>
