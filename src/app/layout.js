@@ -3,7 +3,6 @@ import "./globals.css";
 import Navbar from "./pages/Navbar/Navbar";
 import { CartProvider } from "./context/CartContext";
 
-
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata = {
@@ -14,15 +13,14 @@ export const metadata = {
 export default function RootLayout({ children }) {
   return (
     <>
-        <CartProvider>
-    <html lang="en">
-      <body className={inter.className}>
-        <Navbar />
-        {children}
-      </body>
-   
-    </html>
-        </CartProvider>
-        </>
+      <html lang="en">
+        <body className={inter.className}>
+          <CartProvider>
+            <Navbar />
+            {children}
+          </CartProvider>
+        </body>
+      </html>
+    </>
   );
 }
