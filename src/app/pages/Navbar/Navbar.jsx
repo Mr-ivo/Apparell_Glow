@@ -225,7 +225,7 @@ const Navbar = () => {
 
               <button
                 onClick={toggleMenu}
-                className="md:hidden p-2 rounded-lg transition-all duration-300 hover:bg-gray-100 "
+                className="md:hidden p-2 rounded-lg transition-all duration-300  "
                 aria-label="Toggle menu"
               >
                 {isMenuOpen ? (
