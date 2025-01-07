@@ -1,5 +1,4 @@
 'use client';
-
 import { useState } from 'react';
 import { motion } from 'framer-motion';
 import { Send, Mail, User, MessageSquare, FileText } from 'lucide-react';
@@ -39,8 +38,37 @@ export default function ContactForm() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    // Add your form submission logic here
-    console.log('Form submitted:', formData);
+
+    try {
+      const response = await fetch('http://localhost:5000/api/email/send', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          to: formData.email, 
+          subject: formData.subject,
+          text: formData.message,
+        }),
+      });
+
+      if (response.ok) {
+        const result = await response.text();
+        console.log(result);
+        setFormData({
+          name: '',
+          email: '',
+          subject: '',
+          message: '',
+        });
+        alert('Message sent successfully!');
+      } else {
+        throw new Error('Failed to send message');
+      }
+    } catch (error) {
+      console.error('Error:', error);
+      alert('There was an error sending your message. Please try again later.');
+    }
   };
 
   return (
@@ -53,7 +81,6 @@ export default function ContactForm() {
           transition={{ duration: 0.6 }}
         >
           <div className="grid md:grid-cols-5">
-            {/* Contact Info Section */}
             <div className="md:col-span-2 bg-gradient-to-br from-blue-600 to-blue-700 p-8 text-white">
               <div className="h-full flex flex-col justify-between">
                 <div>
@@ -90,7 +117,6 @@ export default function ContactForm() {
               </div>
             </div>
 
-            {/* Contact Form Section */}
             <div className="md:col-span-3 p-8">
               <form onSubmit={handleSubmit} className="space-y-6">
                 {/* Name Input */}
@@ -118,7 +144,6 @@ export default function ContactForm() {
                   />
                 </motion.div>
 
-                {/* Email Input */}
                 <motion.div variants={fadeInUp} className="relative">
                   <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
                     <Mail className="h-5 w-5 text-gray-400" />
@@ -168,7 +193,6 @@ export default function ContactForm() {
                   />
                 </motion.div>
 
-                {/* Message Input */}
                 <motion.div variants={fadeInUp} className="relative">
                   <textarea
                     id="message"
@@ -190,7 +214,6 @@ export default function ContactForm() {
                   />
                 </motion.div>
 
-                {/* Submit Button */}
                 <motion.button
                   type="submit"
                   className="w-full bg-blue-600 text-white py-3 px-6 rounded-lg font-medium
@@ -200,7 +223,6 @@ export default function ContactForm() {
                   whileTap={{ scale: 0.98 }}
                 >
                   <span>Send Message</span>
-                  <Send className="w-5 h-5" />
                 </motion.button>
               </form>
             </div>

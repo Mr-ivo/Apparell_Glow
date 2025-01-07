@@ -1,4 +1,4 @@
-'use client';
+ 'use client';
 import { useState, useEffect } from 'react';
 import { Pencil, Trash, PlusCircle } from 'lucide-react';
 
@@ -6,7 +6,7 @@ export default function Customers() {
   const [users, setUsers] = useState([]);
   const [showModal, setShowModal] = useState(false);
   const [editMode, setEditMode] = useState(false);
-  const [currentUser, setCurrentUser] = useState({ username: '', email: '', password: '' });
+  const [currentUser, setCurrentUser] = useState({ username: '', email: '', password: '', confirmPassword: '' });
 
   useEffect(() => {
     fetchUsers();
@@ -23,8 +23,13 @@ export default function Customers() {
   };
 
   const handleSave = async () => {
-    if (!currentUser.username || !currentUser.email || !currentUser.password) {
+    if (!currentUser.username || !currentUser.email || !currentUser.password || !currentUser.confirmPassword) {
       alert('All fields are required!');
+      return;
+    }
+
+    if (currentUser.password !== currentUser.confirmPassword) {
+      alert('Passwords do not match!');
       return;
     }
 
@@ -45,7 +50,7 @@ export default function Customers() {
       if (response.ok) {
         fetchUsers();
         setShowModal(false);
-        setCurrentUser({ username: '', email: '', password: '' });
+        setCurrentUser({ username: '', email: '', password: '', confirmPassword: '' });
         setEditMode(false);
       } else {
         const error = await response.json();
@@ -80,7 +85,7 @@ export default function Customers() {
   };
 
   const handleEdit = (user) => {
-    setCurrentUser(user);
+    setCurrentUser({ ...user, confirmPassword: user.password }); // Populate confirmPassword for editing
     setEditMode(true);
     setShowModal(true);
   };
@@ -93,6 +98,7 @@ export default function Customers() {
           onClick={() => {
             setEditMode(false);
             setShowModal(true);
+            setCurrentUser({ username: '', email: '', password: '', confirmPassword: '' }); // Reset form
           }}
           className="flex items-center bg-blue-500 text-white py-2 px-4 rounded-lg hover:bg-blue-600"
         >
@@ -182,6 +188,19 @@ export default function Customers() {
                   className="w-full mt-1 p-2 rounded-lg border border-gray-300 dark:border-gray-700 dark:bg-gray-900 dark:text-gray-200"
                   value={currentUser.password}
                   onChange={(e) => setCurrentUser({ ...currentUser, password: e.target.value })}
+                  required
+                />
+              </div>
+              <div className="mb-4">
+                <label htmlFor="confirmPassword" className="block text-sm text-gray-600 dark:text-gray-300">
+                  Confirm Password
+                </label>
+                <input
+                  id="confirmPassword"
+                  type="password"
+                  className="w-full mt-1 p-2 rounded-lg border border-gray-300 dark:border-gray-700 dark:bg-gray-900 dark:text-gray-200"
+                  value={currentUser.confirmPassword}
+                  onChange={(e) => setCurrentUser({ ...currentUser, confirmPassword: e.target.value })}
                   required
                 />
               </div>
