@@ -40,7 +40,7 @@ export default function ContactForm() {
     e.preventDefault();
 
     try {
-      const response = await fetch('http://glow-backend-2nxl.onrender.com/api/email/send', {
+      const response = await fetch('http://localhost:5000/api/email/send', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
