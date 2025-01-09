@@ -85,7 +85,7 @@ export default function Customers() {
   };
 
   const handleEdit = (user) => {
-    setCurrentUser({ ...user, confirmPassword: user.password }); // Populate confirmPassword for editing
+    setCurrentUser({ ...user, confirmPassword: user.password }); 
     setEditMode(true);
     setShowModal(true);
   };
@@ -98,7 +98,7 @@ export default function Customers() {
           onClick={() => {
             setEditMode(false);
             setShowModal(true);
-            setCurrentUser({ username: '', email: '', password: '', confirmPassword: '' }); // Reset form
+            setCurrentUser({ username: '', email: '', password: '', confirmPassword: '' }); 
           }}
           className="flex items-center bg-blue-500 text-white py-2 px-4 rounded-lg hover:bg-blue-600"
         >

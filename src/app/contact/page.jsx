@@ -40,7 +40,7 @@ export default function ContactForm() {
     e.preventDefault();
 
     try {
-      const response = await fetch('http://localhost:5000/api/email/send', {
+      const response = await fetch('https://glow-backend-2nxl.onrender.com/api/email/send', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -168,7 +168,6 @@ export default function ContactForm() {
                   />
                 </motion.div>
 
-                {/* Subject Input */}
                 <motion.div variants={fadeInUp} className="relative">
                   <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
                     <FileText className="h-5 w-5 text-gray-400" />

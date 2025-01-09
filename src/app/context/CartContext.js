@@ -6,10 +6,10 @@ const CartContext = createContext(undefined);
 
 export function CartProvider({ children }) {
   const [cartItems, setCartItems] = useState([]);
+  const [user, setUser] = useState(null); 
 
   const addToCart = useCallback((product) => {
     setCartItems((prevItems) => {
-
       const existingItem = prevItems.find(item => item.id === product.id);
       if (existingItem) {
         const updatedItems = prevItems.map(item => 
@@ -38,12 +38,25 @@ export function CartProvider({ children }) {
     toast.success('Cart cleared');
   }, []);
 
+  const login = useCallback((userData) => {
+    setUser(userData); 
+    toast.success('Logged in successfully!');
+  }, []);
+
+  const logout = useCallback(() => {
+    setUser(null);
+    toast.success('Logged out successfully!');
+  }, []);
+
   const value = {
     cartItems,
     addToCart,
     removeFromCart,
     getTotalPrice,
     clearCart,
+    user, 
+    login, 
+    logout, 
   };
 
   return (
