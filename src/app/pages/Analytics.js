@@ -3,9 +3,9 @@ import { TrendingUp, BarChart2, PieChart } from 'lucide-react';
 
 export default function Analytics() {
   const metrics = [
-    { id: 1, label: 'Total Sales', value: '$78,200', trend: 'up' },
+    { id: 1, label: 'Total Sales', value: 'cfa80,200', trend: 'up' },
     { id: 2, label: 'Orders', value: '2,540', trend: 'up' },
-    { id: 3, label: 'New Customers', value: '1,120', trend: 'up' },
+    { id: 3, label: 'New Customers', value: '1,000', trend: 'up' },
     { id: 4, label: 'Returns', value: '15', trend: 'down' },
   ];
 
@@ -20,7 +20,6 @@ export default function Analytics() {
     <div className="min-h-screen bg-pink-50 dark:bg-gray-900 px-6 py-8">
       <h1 className="text-3xl font-bold text-gray-800 dark:text-white mb-6">Analytics</h1>
 
-      {/* KPI Metrics */}
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
         {metrics.map((metric) => (
           <div
@@ -40,7 +39,6 @@ export default function Analytics() {
         ))}
       </div>
 
-      {/* Top-Selling Categories */}
       <div className="bg-white dark:bg-gray-800 p-6 rounded-lg shadow-md mb-8">
         <h2 className="text-lg font-medium text-gray-800 dark:text-white mb-4">Top-Selling Categories</h2>
         <div className="space-y-4">
@@ -59,7 +57,6 @@ export default function Analytics() {
         </div>
       </div>
 
-      {/* Beauty Insights */}
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
         <div className="bg-white dark:bg-gray-800 p-6 rounded-lg shadow-md">
           <h2 className="text-lg font-medium text-gray-800 dark:text-white mb-4">Sales Insights</h2>

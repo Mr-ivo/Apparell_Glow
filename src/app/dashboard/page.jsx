@@ -1,7 +1,6 @@
 'use client';
 import { useState } from 'react';
-import Sidebar from '../../components/Sidebar';  // Correct import for Sidebar
-// Import all pages directly from src/app/pages
+import Sidebar from '../../components/Sidebar'; 
 import Overview from '../pages/Overview';
 import Analytics from '../pages/Analytics';
 import Products from '../pages/Products';
@@ -15,7 +14,6 @@ export default function Dashboard() {
   const [activeTab, setActiveTab] = useState('overview');
   const [sidebarOpen, setSidebarOpen] = useState(true);
 
-  // Function to render the correct component based on activeTab
   const renderContent = () => {
     switch (activeTab) {
       case 'overview':
@@ -41,7 +39,6 @@ export default function Dashboard() {
 
   return (
     <div className="min-h-screen bg-gray-100 dark:bg-gray-900">
-      {/* Sidebar */}
       <Sidebar
         activeTab={activeTab}
         setActiveTab={setActiveTab}
@@ -49,10 +46,8 @@ export default function Dashboard() {
         setSidebarOpen={setSidebarOpen}
       />
 
-      {/* Main Content */}
       <div className={`${sidebarOpen ? 'ml-[280px]' : 'ml-[80px]'} transition-all duration-300`}>
         <header className="bg-white dark:bg-gray-800 shadow-sm h-16 fixed right-0 top-0 left-auto w-[calc(100%-280px)] z-20">
-          {/* Add header content here */}
         </header>
         <main className="pt-24 px-6 pb-8">{renderContent()}</main>
       </div>

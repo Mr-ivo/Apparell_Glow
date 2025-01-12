@@ -72,7 +72,7 @@ export default function Customers() {
       });
 
       if (response.ok) {
-        fetchUsers(); // Refresh users
+        fetchUsers(); 
       } else {
         const error = await response.json();
         console.error('Error deleting user:', error);

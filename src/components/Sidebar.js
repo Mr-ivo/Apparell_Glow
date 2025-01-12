@@ -37,7 +37,6 @@ export default function Sidebar({ activeTab, setActiveTab, sidebarOpen, setSideb
       }}
       className="fixed left-0 top-0 h-screen bg-white dark:bg-gray-800 shadow-lg z-30"
     >
-      {/* Sidebar Header */}
       <div className="p-4 flex items-center justify-between">
         {sidebarOpen && (
           <motion.h2
@@ -56,8 +55,6 @@ export default function Sidebar({ activeTab, setActiveTab, sidebarOpen, setSideb
           <Menu className="w-6 h-6 text-gray-600 dark:text-gray-300" />
         </button>
       </div>
-
-      {/* Navigation Menu */}
       <nav className="mt-6">
         {menuItems.map((item) => {
           const Icon = item.icon;
@@ -79,8 +76,6 @@ export default function Sidebar({ activeTab, setActiveTab, sidebarOpen, setSideb
           );
         })}
       </nav>
-
-      {/* Logout Button */}
       <motion.button
         whileHover={{ scale: 1.02 }}
         whileTap={{ scale: 0.98 }}

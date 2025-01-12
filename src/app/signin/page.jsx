@@ -23,7 +23,7 @@ const SignIn = () => {
 
       if (response.ok) {
         alert('Sign-In successful!');
-        router.push('/');
+        router.push('/dashboard');
       } else {
         const result = await response.json();
         setError(result.message);
