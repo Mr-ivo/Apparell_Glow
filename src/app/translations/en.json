@@ -1,0 +1,168 @@
+{
+  "navbar": {
+    "home": "Home",
+    "about": "About",
+    "shop": "Shop",
+    "contact": "Contact",
+    "signIn": "Sign In",
+    "signUp": "Sign Up",
+    "signOut": "Sign Out"
+  },
+  "auth": {
+    "signIn": {
+      "title": "Sign In",
+      "email": "Email:",
+      "password": "Password:",
+      "button": "Sign In",
+      "noAccount": "Do not have an account?",
+      "signUpLink": "Sign Up",
+      "error": "There was an error signing in. Please try again later."
+    },
+    "signUp": {
+      "title": "Sign Up",
+      "username": "Username:",
+      "email": "Email:",
+      "password": "Password:",
+      "confirmPassword": "Confirm Password:",
+      "button": "Sign Up",
+      "haveAccount": "Already have an account?",
+      "signInLink": "Sign In",
+      "error": "There was an error signing up. Please try again later.",
+      "passwordMismatch": "Passwords do not match."
+    }
+  },
+  "home": {
+    "hero": {
+      "title": "Welcome to Glow Cosmetics",
+      "subtitle": "Your Beauty Destination",
+      "shopNow": "Shop Now"
+    },
+    "featured": {
+      "title": "Featured Products",
+      "viewAll": "View All"
+    }
+  },
+  "shop": {
+    "categories": {
+      "all": "All Products",
+      "skincare": "Skincare",
+      "makeup": "Makeup",
+      "haircare": "Haircare",
+      "fragrance": "Fragrance"
+    },
+    "filters": {
+      "title": "Filters",
+      "price": "Price",
+      "brand": "Brand",
+      "sort": {
+        "title": "Sort By",
+        "priceLowHigh": "Price: Low to High",
+        "priceHighLow": "Price: High to Low",
+        "newest": "Newest First",
+        "popular": "Most Popular"
+      }
+    },
+    "product": {
+      "addToCart": "Add to Cart",
+      "outOfStock": "Out of Stock",
+      "quantity": "Quantity"
+    }
+  },
+  "cart": {
+    "title": "Shopping Cart",
+    "empty": "Your cart is empty",
+    "continueShopping": "Continue Shopping",
+    "subtotal": "Subtotal",
+    "shipping": "Shipping",
+    "total": "Total",
+    "checkout": "Proceed to Checkout",
+    "remove": "Remove"
+  },
+  "contact": {
+    "title": "Contact Us",
+    "name": "Name",
+    "email": "Email",
+    "message": "Message",
+    "send": "Send Message",
+    "success": "Message sent successfully!",
+    "error": "Error sending message. Please try again."
+  },
+  "about": {
+    "title": "About Us",
+    "story": "Our Story",
+    "mission": "Our Mission",
+    "values": "Our Values"
+  },
+  "footer": {
+    "company": "Company",
+    "about": "About Us",
+    "careers": "Careers",
+    "blog": "Blog",
+    "help": "Help",
+    "contact": "Contact",
+    "shipping": "Shipping",
+    "returns": "Returns",
+    "faq": "FAQ",
+    "social": "Follow Us",
+    "newsletter": {
+      "title": "Subscribe to our newsletter",
+      "placeholder": "Enter your email",
+      "button": "Subscribe",
+      "success": "Thank you for subscribing!",
+      "error": "Error subscribing. Please try again."
+    },
+    "rights": "All rights reserved"
+  },
+  "common": {
+    "loading": "Loading...",
+    "error": "An error occurred",
+    "retry": "Try Again",
+    "success": "Success!",
+    "cancel": "Cancel",
+    "save": "Save",
+    "delete": "Delete",
+    "edit": "Edit",
+    "search": "Search",
+    "noResults": "No results found"
+  },
+  "checkout": {
+    "steps": {
+      "shipping": "Shipping",
+      "payment": "Payment",
+      "confirmation": "Confirmation"
+    },
+    "shipping": {
+      "firstName": "First Name",
+      "lastName": "Last Name",
+      "email": "Email",
+      "phone": "Phone",
+      "address": "Address",
+      "city": "City",
+      "country": "Country",
+      "postalCode": "Postal Code",
+      "selectCountry": "Select Country"
+    },
+    "payment": {
+      "cardNumber": "Card Number",
+      "cardName": "Name on Card",
+      "expiryDate": "Expiry Date",
+      "cvv": "CVV"
+    },
+    "orderSummary": {
+      "title": "Order Summary",
+      "quantity": "Quantity",
+      "total": "Total"
+    },
+    "buttons": {
+      "back": "Back",
+      "next": "Next",
+      "placeOrder": "Place Order",
+      "processing": "Processing...",
+      "continueShopping": "Continue Shopping"
+    },
+    "confirmation": {
+      "title": "Order Confirmed!",
+      "message": "Thank you for your purchase. We'll send you an email with your order details."
+    }
+  }
+}

@@ -179,7 +179,6 @@ export default function ShopContent() {
         <BackToTopButton />
       </section>
 
-      {/* Features Section */}
       <section className="py-16 px-4">
         <div className="max-w-6xl mx-auto">
           <motion.div 

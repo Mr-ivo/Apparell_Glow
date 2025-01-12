@@ -1,0 +1,168 @@
+{
+  "navbar": {
+    "home": "Accueil",
+    "about": "À propos",
+    "shop": "Boutique",
+    "contact": "Contact",
+    "signIn": "Se connecter",
+    "signUp": "S'inscrire",
+    "signOut": "Se déconnecter"
+  },
+  "auth": {
+    "signIn": {
+      "title": "Se connecter",
+      "email": "Email :",
+      "password": "Mot de passe :",
+      "button": "Se connecter",
+      "noAccount": "Vous n'avez pas de compte ?",
+      "signUpLink": "S'inscrire",
+      "error": "Une erreur s'est produite lors de la connexion. Veuillez réessayer plus tard."
+    },
+    "signUp": {
+      "title": "S'inscrire",
+      "username": "Nom d'utilisateur :",
+      "email": "Email :",
+      "password": "Mot de passe :",
+      "confirmPassword": "Confirmer le mot de passe :",
+      "button": "S'inscrire",
+      "haveAccount": "Vous avez déjà un compte ?",
+      "signInLink": "Se connecter",
+      "error": "Une erreur s'est produite lors de l'inscription. Veuillez réessayer plus tard.",
+      "passwordMismatch": "Les mots de passe ne correspondent pas."
+    }
+  },
+  "home": {
+    "hero": {
+      "title": "Bienvenue chez Glow Cosmetics",
+      "subtitle": "Votre Destination Beauté",
+      "shopNow": "Acheter Maintenant"
+    },
+    "featured": {
+      "title": "Produits Vedettes",
+      "viewAll": "Voir Tout"
+    }
+  },
+  "shop": {
+    "categories": {
+      "all": "Tous les Produits",
+      "skincare": "Soins de la Peau",
+      "makeup": "Maquillage",
+      "haircare": "Soins Capillaires",
+      "fragrance": "Parfums"
+    },
+    "filters": {
+      "title": "Filtres",
+      "price": "Prix",
+      "brand": "Marque",
+      "sort": {
+        "title": "Trier Par",
+        "priceLowHigh": "Prix : Croissant",
+        "priceHighLow": "Prix : Décroissant",
+        "newest": "Plus Récent",
+        "popular": "Plus Populaire"
+      }
+    },
+    "product": {
+      "addToCart": "Ajouter au Panier",
+      "outOfStock": "Rupture de Stock",
+      "quantity": "Quantité"
+    }
+  },
+  "cart": {
+    "title": "Panier",
+    "empty": "Votre panier est vide",
+    "continueShopping": "Continuer les Achats",
+    "subtotal": "Sous-total",
+    "shipping": "Livraison",
+    "total": "Total",
+    "checkout": "Passer à la Caisse",
+    "remove": "Supprimer"
+  },
+  "contact": {
+    "title": "Contactez-nous",
+    "name": "Nom",
+    "email": "Email",
+    "message": "Message",
+    "send": "Envoyer le Message",
+    "success": "Message envoyé avec succès !",
+    "error": "Erreur lors de l'envoi du message. Veuillez réessayer."
+  },
+  "about": {
+    "title": "À Propos de Nous",
+    "story": "Notre Histoire",
+    "mission": "Notre Mission",
+    "values": "Nos Valeurs"
+  },
+  "footer": {
+    "company": "Entreprise",
+    "about": "À Propos",
+    "careers": "Carrières",
+    "blog": "Blog",
+    "help": "Aide",
+    "contact": "Contact",
+    "shipping": "Livraison",
+    "returns": "Retours",
+    "faq": "FAQ",
+    "social": "Suivez-nous",
+    "newsletter": {
+      "title": "Abonnez-vous à notre newsletter",
+      "placeholder": "Entrez votre email",
+      "button": "S'abonner",
+      "success": "Merci de votre inscription !",
+      "error": "Erreur lors de l'inscription. Veuillez réessayer."
+    },
+    "rights": "Tous droits réservés"
+  },
+  "common": {
+    "loading": "Chargement...",
+    "error": "Une erreur s'est produite",
+    "retry": "Réessayer",
+    "success": "Succès !",
+    "cancel": "Annuler",
+    "save": "Enregistrer",
+    "delete": "Supprimer",
+    "edit": "Modifier",
+    "search": "Rechercher",
+    "noResults": "Aucun résultat trouvé"
+  },
+  "checkout": {
+    "steps": {
+      "shipping": "Livraison",
+      "payment": "Paiement",
+      "confirmation": "Confirmation"
+    },
+    "shipping": {
+      "firstName": "Prénom",
+      "lastName": "Nom",
+      "email": "Email",
+      "phone": "Téléphone",
+      "address": "Adresse",
+      "city": "Ville",
+      "country": "Pays",
+      "postalCode": "Code Postal",
+      "selectCountry": "Sélectionner un pays"
+    },
+    "payment": {
+      "cardNumber": "Numéro de carte",
+      "cardName": "Nom sur la carte",
+      "expiryDate": "Date d'expiration",
+      "cvv": "CVV"
+    },
+    "orderSummary": {
+      "title": "Résumé de la commande",
+      "quantity": "Quantité",
+      "total": "Total"
+    },
+    "buttons": {
+      "back": "Retour",
+      "next": "Suivant",
+      "placeOrder": "Commander",
+      "processing": "Traitement en cours...",
+      "continueShopping": "Continuer les achats"
+    },
+    "confirmation": {
+      "title": "Commande confirmée !",
+      "message": "Merci pour votre achat. Nous vous enverrons un email avec les détails de votre commande."
+    }
+  }
+}

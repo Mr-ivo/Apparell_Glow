@@ -1,10 +1,13 @@
 "use client";
 import React, { useEffect, useState } from "react";
-import { ShoppingCart, Menu, X, Sun, Moon } from "lucide-react";
+import { ShoppingCart, Menu, X, Sun, Moon, Globe } from "lucide-react";
 import Link from "next/link";
+import Image from "next/image";
 import { usePathname } from "next/navigation";
 import { useCart } from "@/app/context/CartContext";
+import { useLanguage } from "@/app/context/LanguageContext";
 import { motion, AnimatePresence } from "framer-motion";
+import Cookies from 'js-cookie';
 
 const Navbar = () => {
   const pathname = usePathname();
@@ -16,6 +19,20 @@ const Navbar = () => {
   const [isCartHovered, setIsCartHovered] = useState(false);
 
   const { cartItems } = useCart();
+  const { language, changeLanguage } = useLanguage();
+  const [translations, setTranslations] = useState({});
+
+  useEffect(() => {
+    const loadTranslations = async () => {
+      try {
+        const trans = await import(`@/app/translations/${language}.json`);
+        setTranslations(trans);
+      } catch (error) {
+        console.error('Error loading translations:', error);
+      }
+    };
+    loadTranslations();
+  }, [language]);
 
   const [user, setUser] = useState(null);
 
@@ -26,7 +43,24 @@ const Navbar = () => {
 
   const handleSignOut = () => {
     localStorage.removeItem("user");
+    Cookies.remove('user');
     setUser(null);
+    window.location.href = '/'; 
+  };
+
+  const getUserInitials = (user) => {
+    if (!user) return '';
+    
+    if (user.username) {
+      return user.username.slice(0, 2).toUpperCase();
+    }
+    
+    if (user.email) {
+      const emailUsername = user.email.split('@')[0];
+      return emailUsername.slice(0, 2).toUpperCase();
+    }
+    
+    return '';
   };
 
   const toggleMenu = () => setIsMenuOpen(!isMenuOpen);
@@ -54,10 +88,10 @@ const Navbar = () => {
   }, []);
 
   const navLinks = [
-    { href: "/", label: "Home" },
-    { href: "/about", label: "About" },
-    { href: "/shop", label: "Shop" },
-    { href: "/contact", label: "Contact" },
+    { href: "/", label: translations?.navbar?.home || "Home" },
+    { href: "/about", label: translations?.navbar?.about || "About" },
+    { href: "/shop", label: translations?.navbar?.shop || "Shop" },
+    { href: "/contact", label: translations?.navbar?.contact || "Contact" },
   ];
 
   return (
@@ -103,12 +137,17 @@ const Navbar = () => {
           <div className="flex justify-between items-center h-16">
             <Link
               href="/"
-              className="text-2xl font-bold tracking-tighter transition-transform hover:scale-105"
+              className="transition-transform hover:scale-105"
             >
-              <span className="text-black dark:text-white">ApparellGlow</span>
+              <Image
+                src="/logo_A.png"
+                alt="Glow Logo"
+                width={100}
+                height={60}
+                className="object-contain"
+              />
             </Link>
 
-            {/* Desktop Navigation */}
             <nav className="hidden md:flex items-center space-x-8">
               {navLinks.map(({ href, label }) => (
                 <Link
@@ -130,15 +169,36 @@ const Navbar = () => {
             <div className="flex items-center space-x-4">
               <button
                 onClick={toggleTheme}
-                className="p-2 rounded-full transition-all duration-300 hover:bg-gray-100 dark:hover:bg-gray-800"
+                className="p-2 rounded-full hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors"
                 aria-label="Toggle theme"
               >
-                {isDarkMode ? (
-                  <Sun className="w-5 h-5 text-white transition-transform hover:rotate-45" />
-                ) : (
-                  <Moon className="w-5 h-5 text-black transition-transform hover:-rotate-45" />
-                )}
+                {isDarkMode ? <Sun size={24} /> : <Moon size={24} />}
               </button>
+
+           
+              <div className="relative group">
+                <button
+                  className="p-2 rounded-full hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors flex items-center gap-1"
+                  aria-label="Change language"
+                >
+                  <Globe size={24} />
+                  <span className="text-sm font-medium uppercase">{language}</span>
+                </button>
+                <div className="absolute right-0 mt-2 w-24 bg-white dark:bg-gray-800 rounded-lg shadow-lg opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200">
+                  <button
+                    onClick={() => changeLanguage('en')}
+                    className="block w-full text-left px-4 py-2 text-sm hover:bg-gray-100 dark:hover:bg-gray-700 rounded-t-lg"
+                  >
+                    English
+                  </button>
+                  <button
+                    onClick={() => changeLanguage('fr')}
+                    className="block w-full text-left px-4 py-2 text-sm hover:bg-gray-100 dark:hover:bg-gray-700 rounded-b-lg"
+                  >
+                    Français
+                  </button>
+                </div>
+              </div>
 
               <div
                 className="relative"
@@ -147,48 +207,45 @@ const Navbar = () => {
               >
                 <Link
                   href="/cart"
-                  className="relative p-2 rounded-full transition-all duration-300 dark:hover:bg-gray-800"
+                  className="relative p-2 rounded-full hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors"
                 >
-                  <ShoppingCart className="w-5 h-5 text-black dark:text-white" />
+                  <ShoppingCart size={24} />
                   {cartItems.length > 0 && (
-                    <motion.span
-                      initial={{ scale: 0 }}
-                      animate={{ scale: 1 }}
-                      exit={{ scale: 0 }}
-                      className="cart-badge bg-blue-600 text-white"
-                    >
+                    <span className={`cart-badge bg-blue-600 text-white ${isCartHovered ? 'cart-badge-bounce' : ''}`}>
                       {cartItems.length}
-                    </motion.span>
+                    </span>
                   )}
                 </Link>
               </div>
 
               {user ? (
-                <div className="relative group">
+                <div className="flex items-center gap-2">
+                  <div className="w-8 h-8 flex items-center justify-center bg-blue-600 text-white rounded-full hover:bg-blue-700 transition-colors">
+                    {getUserInitials(user)}
+                  </div>
                   <button
                     onClick={handleSignOut}
-                    className="w-8 h-8 flex items-center justify-center bg-blue-600 text-white rounded-full"
+                    className="text-sm font-medium hover:text-blue-600 transition-colors"
                   >
-                    {user.name.slice(0, 2).toUpperCase()}
+                    {translations?.navbar?.signOut || "Sign Out"}
                   </button>
                 </div>
               ) : (
-                <>
-                  <Link
-                    href="/signup"
-                    className="text-sm font-medium text-gray-600 dark:text-gray-300 hover:text-black dark:hover:text-white"
-                  >
-                    Sign Up
-                  </Link>
+                <div className="flex items-center gap-2">
                   <Link
                     href="/signin"
-                    className="text-sm font-medium text-gray-600 dark:text-gray-300 hover:text-black dark:hover:text-white"
+                    className="text-sm font-medium hover:text-blue-600 transition-colors"
                   >
-                    Sign In
+                    {translations?.navbar?.signIn || "Sign In"}
                   </Link>
-                </>
+                  <Link
+                    href="/signup"
+                    className="text-sm font-medium hover:text-blue-600 transition-colors"
+                  >
+                    {translations?.navbar?.signUp || "Sign Up"}
+                  </Link>
+                </div>
               )}
-
               <button
                 onClick={toggleMenu}
                 className="md:hidden p-2 rounded-lg transition-all duration-300"

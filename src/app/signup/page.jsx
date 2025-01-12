@@ -2,8 +2,11 @@
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
+import Cookies from 'js-cookie';
+import { useTranslations } from '../hooks/useTranslations';
 
 const SignUp = () => {
+  const { t } = useTranslations();
   const [formData, setFormData] = useState({
     username: '',
     email: '',
@@ -25,7 +28,7 @@ const SignUp = () => {
     e.preventDefault();
 
     if (formData.password !== formData.confirm_password) { 
-      setError('Passwords do not match.');
+      setError(t('auth.signUp.passwordMismatch'));
       return;
     }
 
@@ -38,27 +41,35 @@ const SignUp = () => {
         body: JSON.stringify(formData),
       });
 
+      const userData = await response.json();
+
       if (response.ok) {
-        alert('Sign-Up successful! Please sign in.');
-        router.push('/signin'); 
+        const user = {
+          email: formData.email,
+          username: formData.username
+        };
+        
+        localStorage.setItem('user', JSON.stringify(user));
+        Cookies.set('user', JSON.stringify(user), { expires: 7 });
+        
+        window.location.href = '/dashboard';
       } else {
-        const result = await response.json();
-        setError(result.message);
+        setError(userData.message);
       }
     } catch (error) {
-      setError('There was an error signing up. Please try again later.');
+      setError(t('auth.signUp.error'));
     }
   };
 
   return (
     <div className="flex items-center justify-center min-h-screen bg-gray-100">
-      <div className="bg-white p-6 rounded-lg shadow-md w-80">
-        <h2 className="text-2xl font-bold mb-3 text-center">Sign Up</h2>
-        {error && <p className="text-red-500 mb-3">{error}</p>}
+      <div className="bg-white p-8 rounded-lg shadow-md w-96">
+        <h2 className="text-2xl font-bold mb-6 text-center">{t('auth.signUp.title')}</h2>
+        {error && <p className="text-red-500 mb-4">{error}</p>}
         <form onSubmit={handleSubmit}>
-          <div className="mb-2">
-            <label className="block text-sm font-medium mb-1" htmlFor="username">
-              Username:
+          <div className="mb-4">
+            <label className="block text-sm font-medium mb-2" htmlFor="username">
+              {t('auth.signUp.username')}
             </label>
             <input
               type="text"
@@ -70,9 +81,9 @@ const SignUp = () => {
               required
             />
           </div>
-          <div className="mb-2">
-            <label className="block text-sm font-medium mb-1" htmlFor="email">
-              Email:
+          <div className="mb-4">
+            <label className="block text-sm font-medium mb-2" htmlFor="email">
+              {t('auth.signUp.email')}
             </label>
             <input
               type="email"
@@ -84,9 +95,9 @@ const SignUp = () => {
               required
             />
           </div>
-          <div className="mb-2">
-            <label className="block text-sm font-medium mb-1" htmlFor="password">
-              Password:
+          <div className="mb-4">
+            <label className="block text-sm font-medium mb-2" htmlFor="password">
+              {t('auth.signUp.password')}
             </label>
             <input
               type="password"
@@ -98,15 +109,15 @@ const SignUp = () => {
               required
             />
           </div>
-          <div className="mb-2">
-            <label className="block text-sm font-medium mb-1" htmlFor="confirm_password"> 
-              Confirm Password:
+          <div className="mb-4">
+            <label className="block text-sm font-medium mb-2" htmlFor="confirm_password">
+              {t('auth.signUp.confirmPassword')}
             </label>
             <input
               type="password"
               id="confirm_password"
               name="confirm_password"
-              value={formData.confirm_password} 
+              value={formData.confirm_password}
               onChange={handleChange}
               className="w-full p-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-600"
               required
@@ -116,12 +127,12 @@ const SignUp = () => {
             type="submit"
             className="w-full bg-blue-600 text-white py-2 rounded hover:bg-blue-700 transition-colors"
           >
-            Sign Up
+            {t('auth.signUp.button')}
           </button>
-          <p className="mt-3 text-sm text-center">
-            Already have an account?{' '}
+          <p className="mt-4 text-sm text-center">
+            {t('auth.signUp.haveAccount')}{' '}
             <Link href="/signin" className="text-blue-600 hover:underline">
-              Sign In
+              {t('auth.signUp.signInLink')}
             </Link>
           </p>
         </form>

@@ -2,8 +2,11 @@
 import React, { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
+import Cookies from 'js-cookie';
+import { useTranslations } from '../hooks/useTranslations';
 
 const SignIn = () => {
+  const { t } = useTranslations();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
@@ -21,27 +24,35 @@ const SignIn = () => {
         body: JSON.stringify({ email, password }),
       });
 
+      const userData = await response.json();
+
       if (response.ok) {
-        alert('Sign-In successful!');
-        router.push('/dashboard');
+        const user = { 
+          email: email,
+          username: userData.username || email.split('@')[0]
+        };
+        
+        localStorage.setItem('user', JSON.stringify(user));
+        Cookies.set('user', JSON.stringify(user), { expires: 7 });
+        
+        window.location.href = '/dashboard';
       } else {
-        const result = await response.json();
-        setError(result.message);
+        setError(userData.message);
       }
     } catch (error) {
-      setError('There was an error signing in. Please try again later.');
+      setError(t('auth.signIn.error'));
     }
   };
 
   return (
     <div className="flex items-center justify-center min-h-screen bg-gray-100">
       <div className="bg-white p-8 rounded-lg shadow-md w-96">
-        <h2 className="text-2xl font-bold mb-6 text-center">Sign In</h2>
+        <h2 className="text-2xl font-bold mb-6 text-center">{t('auth.signIn.title')}</h2>
         {error && <p className="text-red-500 mb-4">{error}</p>}
         <form onSubmit={handleSubmit}>
           <div className="mb-4">
             <label className="block text-sm font-medium mb-2" htmlFor="email">
-              Email:
+              {t('auth.signIn.email')}
             </label>
             <input
               type="email"
@@ -54,7 +65,7 @@ const SignIn = () => {
           </div>
           <div className="mb-4">
             <label className="block text-sm font-medium mb-2" htmlFor="password">
-              Password:
+              {t('auth.signIn.password')}
             </label>
             <input
               type="password"
@@ -69,12 +80,12 @@ const SignIn = () => {
             type="submit"
             className="w-full bg-blue-600 text-white py-2 rounded hover:bg-blue-700 transition-colors"
           >
-            Sign In
+            {t('auth.signIn.button')}
           </button>
           <p className="mt-4 text-sm text-center">
-            Do not have an account?{' '}
+            {t('auth.signIn.noAccount')}{' '}
             <Link href="/signup" className="text-blue-600 hover:underline">
-              Sign Up
+              {t('auth.signIn.signUpLink')}
             </Link>
           </p>
         </form>
