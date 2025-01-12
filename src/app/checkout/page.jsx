@@ -280,9 +280,9 @@ const CheckoutPage = () => {
       <div className="flex justify-center">
         <CheckCircle className="w-20 h-20 text-green-500" />
       </div>
-      <h2 className="text-2xl font-semibold">Order Confirmed!</h2>
+      <h2 className="text-2xl font-semibold">Order Confirmed</h2>
       <p className="text-gray-600">
-        Thank you for your purchase. We'll send you an email with your order details.
+        Thank you for your purchase. We will send you an email with your order details.
       </p>
       <button
         onClick={() => router.push('/shop')}
