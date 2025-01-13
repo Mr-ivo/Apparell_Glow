@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="200" height="50" viewBox="0 0 200 50" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="textGradient" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" style="stop-color:#2563eb"/>
+      <stop offset="100%" style="stop-color:#9333ea"/>
+    </linearGradient>
+    <filter id="glow" x="-50%" y="-50%" width="200%" height="200%">
+      <feGaussianBlur in="SourceGraphic" stdDeviation="2" />
+    </filter>
+  </defs>
+
+  <path d="M30 25C30 38.8071 38.8071 47 25 47C11.1929 47 0 35.8071 0 22C0 8.19288 11.1929 -3 25 -3C38.8071 -3 30 11.1929 30 25Z" fill="url(#textGradient)"/>
+  
+  <circle cx="25" cy="22" r="3" fill="white" filter="url(#glow)"/>
+  
+  <!-- Text -->
+  <text x="45" y="32" font-family="Arial" font-weight="bold" font-size="24" fill="url(#textGradient)">Apparell</text>
+  <text x="140" y="32" font-family="Arial" font-weight="300" font-size="24" fill="#4B5563">glow</text>
+</svg>

@@ -315,7 +315,7 @@ const CheckoutPage = () => {
                           <ChevronLeft className="w-5 h-5 mr-1" />
                           Back
                         </button>
-                      )}
+                      )}``
                       {step < 2 ? (
                         <button
                           type="button"

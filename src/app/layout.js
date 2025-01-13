@@ -7,23 +7,29 @@ import { LanguageProvider } from "./context/LanguageContext";
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata = {
-  title: "Glow Cosmetics",
-  description: "Your beauty destination",
+  title: "Apparellglow",
+  description: "Your Fashion Destination",
+  icons: {
+    icon: "/icon.png",
+    shortcut: "/icon.png",
+    apple: "/icon.png",
+  },
 };
 
 export default function RootLayout({ children }) {
   return (
-    <>
-      <html lang="en">
-        <body className={inter.className}>
-          <LanguageProvider>
-            <CartProvider>
-              <Navbar />
-              {children}
-            </CartProvider>
-          </LanguageProvider>
-        </body>
-      </html>
-    </>
+    <html lang="en">
+      <head>
+        <link rel="icon" href="/icon.png" />
+      </head>
+      <body className={inter.className}>
+        <LanguageProvider>
+          <CartProvider>
+            <Navbar />
+            {children}
+          </CartProvider>
+        </LanguageProvider>
+      </body>
+    </html>
   );
 }

@@ -162,7 +162,7 @@ export default function CartPage() {
                       <span>CAF {finalTotal.toFixed(2)}</span>
                     </div>
                   </div>
-
+                  <Link href="/checkout">
                   <motion.button
                     whileHover={{ scale: 1.02 }}
                     whileTap={{ scale: 0.98 }}
@@ -172,6 +172,8 @@ export default function CartPage() {
                   >
                     Proceed to Checkout
                   </motion.button>
+                  </Link>
+
 
                   <Link href="/shop">
                     <motion.button

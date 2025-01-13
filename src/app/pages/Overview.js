@@ -5,7 +5,7 @@ export default function Overview() {
   const activities = [
     { id: 1, message: 'New order placed by John Doe', timestamp: '10 mins ago' },
     { id: 2, message: 'Customer Sarah Johnson signed up', timestamp: '30 mins ago' },
-    { id: 3, message: 'Product "Smartphone" added to inventory', timestamp: '1 hour ago' },
+    { id: 3, message: 'Product "Skin product" added to inventory', timestamp: '1 hour ago' },
   ];
 
   return (
