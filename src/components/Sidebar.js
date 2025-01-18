@@ -11,7 +11,9 @@ import {
   LogOut,
   Menu,
 } from 'lucide-react';
-
+import { useRouter } from 'next/navigation';
+import { useCart } from '../app/context/CartContext';
+import { useAuth } from '../app/context/AuthContext';
 
 const menuItems = [
   { id: 'overview', label: 'Overview', icon: LayoutDashboard },
@@ -25,8 +27,20 @@ const menuItems = [
 ];
 
 export default function Sidebar({ activeTab, setActiveTab, sidebarOpen, setSidebarOpen }) {
-  const handleLogout = () => console.log('Logging out...')
-  ;
+  const router = useRouter();
+  const { clearCart } = useCart();
+  const { logout } = useAuth();
+
+  const handleLogout = () => {
+    clearCart();
+
+    logout();
+
+    localStorage.clear();
+    sessionStorage.clear();
+
+    router.push('/');
+  };
 
   return (
     <motion.aside

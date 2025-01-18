@@ -2,11 +2,12 @@
 import React, { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
-import Cookies from 'js-cookie';
 import { useTranslations } from '../hooks/useTranslations';
+import { useAuth } from '../context/AuthContext';
 
 const SignIn = () => {
   const { t } = useTranslations();
+  const { login } = useAuth();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
@@ -29,15 +30,17 @@ const SignIn = () => {
       if (response.ok) {
         const user = { 
           email: email,
-          username: userData.username || email.split('@')[0]
+          username: userData.username || email.split('@')[0],
+          id: userData.id
         };
         
-        localStorage.setItem('user', JSON.stringify(user));
-        Cookies.set('user', JSON.stringify(user), { expires: 7 });
+        // Use AuthContext login
+        login(user);
         
-        window.location.href = '/dashboard';
+        // Use Next.js router
+        router.push('/dashboard');
       } else {
-        setError(userData.message);
+        setError(userData.message || t('auth.signIn.error'));
       }
     } catch (error) {
       setError(t('auth.signIn.error'));

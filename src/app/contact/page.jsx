@@ -72,7 +72,7 @@ export default function ContactForm() {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-gray-50 to-white dark:from-gray-900 dark:to-gray-800 py-16 px-4">
+    <main className="pt-28 min-h-screen bg-white dark:bg-gray-900">
       <div className="max-w-4xl mx-auto">
         <motion.div 
           className="bg-white dark:bg-gray-800 rounded-2xl shadow-xl overflow-hidden"
@@ -228,6 +228,6 @@ export default function ContactForm() {
           </div>
         </motion.div>
       </div>
-    </div>
+    </main>
   );
 }

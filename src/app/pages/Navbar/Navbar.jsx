@@ -91,6 +91,7 @@ const Navbar = () => {
     { href: "/", label: translations?.navbar?.home || "Home" },
     { href: "/about", label: translations?.navbar?.about || "About" },
     { href: "/shop", label: translations?.navbar?.shop || "Shop" },
+    { href: "/consultation", label: translations?.navbar?.consultation || "Consultation" },
     { href: "/contact", label: translations?.navbar?.contact || "Contact" },
   ];
 
@@ -287,6 +288,19 @@ const Navbar = () => {
                       </Link>
                     </li>
                   ))}
+                  <li>
+                    <Link
+                      href="/consultation"
+                      className={`${
+                        pathname === "/consultation"
+                          ? "text-blue-500"
+                          : "text-gray-800 dark:text-white"
+                      } hover:text-blue-500 transition-colors duration-200`}
+                      onClick={() => setIsMenuOpen(false)}
+                    >
+                      Skin Consultation
+                    </Link>
+                  </li>
                   {!user && (
                     <>
                       <li>

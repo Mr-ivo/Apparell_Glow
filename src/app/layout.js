@@ -3,6 +3,7 @@ import "./globals.css";
 import Navbar from "./pages/Navbar/Navbar";
 import { CartProvider } from "./context/CartContext";
 import { LanguageProvider } from "./context/LanguageContext";
+import { AuthProvider } from "./context/AuthContext";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -23,12 +24,14 @@ export default function RootLayout({ children }) {
         <link rel="icon" href="/icon.png" />
       </head>
       <body className={inter.className}>
-        <LanguageProvider>
-          <CartProvider>
-            <Navbar />
-            {children}
-          </CartProvider>
-        </LanguageProvider>
+        <AuthProvider>
+          <LanguageProvider>
+            <CartProvider>
+              <Navbar />
+              {children}
+            </CartProvider>
+          </LanguageProvider>
+        </AuthProvider>
       </body>
     </html>
   );

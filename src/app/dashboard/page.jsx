@@ -9,6 +9,7 @@ import Customers from '../pages/Customers';
 import Reports from '../pages/Reports';
 import Support from '../pages/Support';
 import Settings from '../pages/Settings';
+import ProtectedRoute from '../../components/ProtectedRoute';
 
 export default function Dashboard() {
   const [activeTab, setActiveTab] = useState('overview');
@@ -38,19 +39,23 @@ export default function Dashboard() {
   };
 
   return (
-    <div className="min-h-screen bg-gray-100 dark:bg-gray-900">
-      <Sidebar
-        activeTab={activeTab}
-        setActiveTab={setActiveTab}
-        sidebarOpen={sidebarOpen}
-        setSidebarOpen={setSidebarOpen}
-      />
+    <ProtectedRoute>
+      <div className="min-h-screen bg-gray-100 dark:bg-gray-900">
+        <Sidebar
+          activeTab={activeTab}
+          setActiveTab={setActiveTab}
+          sidebarOpen={sidebarOpen}
+          setSidebarOpen={setSidebarOpen}
+        />
 
-      <div className={`${sidebarOpen ? 'ml-[280px]' : 'ml-[80px]'} transition-all duration-300`}>
-        <header className="bg-white dark:bg-gray-800 shadow-sm h-16 fixed right-0 top-0 left-auto w-[calc(100%-280px)] z-20">
-        </header>
-        <main className="pt-24 px-6 pb-8">{renderContent()}</main>
+        <div className={`${sidebarOpen ? 'ml-[280px]' : 'ml-[80px]'} transition-all duration-300`}>
+          <header className="bg-white dark:bg-gray-800 shadow-sm h-16 fixed right-0 top-0 left-auto w-[calc(100%-280px)] z-20">
+          </header>
+          <main className="p-8 pt-24">
+            {renderContent()}
+          </main>
+        </div>
       </div>
-    </div>
+    </ProtectedRoute>
   );
 }

@@ -2,11 +2,12 @@
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
-import Cookies from 'js-cookie';
 import { useTranslations } from '../hooks/useTranslations';
+import { useAuth } from '../context/AuthContext';
 
 const SignUp = () => {
   const { t } = useTranslations();
+  const { login } = useAuth();
   const [formData, setFormData] = useState({
     username: '',
     email: '',
@@ -46,15 +47,17 @@ const SignUp = () => {
       if (response.ok) {
         const user = {
           email: formData.email,
-          username: formData.username
+          username: formData.username,
+          id: userData.id // Include the user ID if your API returns it
         };
         
-        localStorage.setItem('user', JSON.stringify(user));
-        Cookies.set('user', JSON.stringify(user), { expires: 7 });
+        // Use AuthContext login instead of direct localStorage
+        login(user);
         
-        window.location.href = '/dashboard';
+        // Use router for navigation
+        router.push('/dashboard');
       } else {
-        setError(userData.message);
+        setError(userData.message || t('auth.signUp.error'));
       }
     } catch (error) {
       setError(t('auth.signUp.error'));
