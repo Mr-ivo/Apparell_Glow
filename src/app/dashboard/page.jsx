@@ -40,21 +40,18 @@ export default function Dashboard() {
 
   return (
     <ProtectedRoute>
-      <div className="min-h-screen bg-gray-100 dark:bg-gray-900">
+      <div className="flex h-screen bg-gray-100">
         <Sidebar
           activeTab={activeTab}
           setActiveTab={setActiveTab}
           sidebarOpen={sidebarOpen}
           setSidebarOpen={setSidebarOpen}
         />
-
-        <div className={`${sidebarOpen ? 'ml-[280px]' : 'ml-[80px]'} transition-all duration-300`}>
-          <header className="bg-white dark:bg-gray-800 shadow-sm h-16 fixed right-0 top-0 left-auto w-[calc(100%-280px)] z-20">
-          </header>
-          <main className="p-8 pt-24">
+        <main className={`flex-1 overflow-x-hidden overflow-y-auto bg-gray-100 ${sidebarOpen ? 'ml-64' : 'ml-20'}`}>
+          <div className="container mx-auto px-6 py-8">
             {renderContent()}
-          </main>
-        </div>
+          </div>
+        </main>
       </div>
     </ProtectedRoute>
   );

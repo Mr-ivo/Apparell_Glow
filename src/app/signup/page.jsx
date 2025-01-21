@@ -1,144 +1,155 @@
 'use client';
+
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
-import { useTranslations } from '../hooks/useTranslations';
-import { useAuth } from '../context/AuthContext';
+import { toast, ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const SignUp = () => {
-  const { t } = useTranslations();
-  const { login } = useAuth();
+  const router = useRouter();
   const [formData, setFormData] = useState({
     username: '',
     email: '',
     password: '',
-    confirm_password: '', 
+    confirm_password: ''
   });
-  const [error, setError] = useState('');
-  const router = useRouter();
+  const [isLoading, setIsLoading] = useState(false);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-    setFormData((prevData) => ({
-      ...prevData,
-      [name]: value,
+    setFormData(prev => ({
+      ...prev,
+      [name]: value
     }));
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setIsLoading(true);
 
-    if (formData.password !== formData.confirm_password) { 
-      setError(t('auth.signUp.passwordMismatch'));
+    if (formData.password !== formData.confirm_password) {
+      toast.error('Passwords do not match');
+      setIsLoading(false);
       return;
     }
 
     try {
+      const requestBody = {
+        username: formData.username,
+        email: formData.email,
+        password: formData.password
+      };
+
       const response = await fetch('https://glow-backend-2nxl.onrender.com/api/users', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify(formData),
+        body: JSON.stringify(requestBody),
       });
 
-      const userData = await response.json();
+      const data = await response.json();
 
       if (response.ok) {
-        const user = {
-          email: formData.email,
-          username: formData.username,
-          id: userData.id // Include the user ID if your API returns it
-        };
-        
-        // Use AuthContext login instead of direct localStorage
-        login(user);
-        
-        // Use router for navigation
-        router.push('/dashboard');
+        toast.success('Successfully signed up! Please sign in to continue.', {
+          onClose: () => {
+            router.push('/signin');
+          }
+        });
       } else {
-        setError(userData.message || t('auth.signUp.error'));
+        toast.error(data.message || 'Failed to sign up');
       }
     } catch (error) {
-      setError(t('auth.signUp.error'));
+      console.error('Signup error:', error);
+      toast.error('An error occurred during signup');
+    } finally {
+      setIsLoading(false);
     }
   };
 
   return (
-    <div className="flex items-center justify-center min-h-screen bg-gray-100">
-      <div className="bg-white p-8 rounded-lg shadow-md w-96">
-        <h2 className="text-2xl font-bold mb-6 text-center">{t('auth.signUp.title')}</h2>
-        {error && <p className="text-red-500 mb-4">{error}</p>}
-        <form onSubmit={handleSubmit}>
-          <div className="mb-4">
-            <label className="block text-sm font-medium mb-2" htmlFor="username">
-              {t('auth.signUp.username')}
-            </label>
-            <input
-              type="text"
-              id="username"
-              name="username"
-              value={formData.username}
-              onChange={handleChange}
-              className="w-full p-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-600"
-              required
-            />
-          </div>
-          <div className="mb-4">
-            <label className="block text-sm font-medium mb-2" htmlFor="email">
-              {t('auth.signUp.email')}
-            </label>
-            <input
-              type="email"
-              id="email"
-              name="email"
-              value={formData.email}
-              onChange={handleChange}
-              className="w-full p-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-600"
-              required
-            />
-          </div>
-          <div className="mb-4">
-            <label className="block text-sm font-medium mb-2" htmlFor="password">
-              {t('auth.signUp.password')}
-            </label>
-            <input
-              type="password"
-              id="password"
-              name="password"
-              value={formData.password}
-              onChange={handleChange}
-              className="w-full p-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-600"
-              required
-            />
-          </div>
-          <div className="mb-4">
-            <label className="block text-sm font-medium mb-2" htmlFor="confirm_password">
-              {t('auth.signUp.confirmPassword')}
-            </label>
-            <input
-              type="password"
-              id="confirm_password"
-              name="confirm_password"
-              value={formData.confirm_password}
-              onChange={handleChange}
-              className="w-full p-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-600"
-              required
-            />
-          </div>
-          <button
-            type="submit"
-            className="w-full bg-blue-600 text-white py-2 rounded hover:bg-blue-700 transition-colors"
-          >
-            {t('auth.signUp.button')}
-          </button>
-          <p className="mt-4 text-sm text-center">
-            {t('auth.signUp.haveAccount')}{' '}
-            <Link href="/signin" className="text-blue-600 hover:underline">
-              {t('auth.signUp.signInLink')}
-            </Link>
-          </p>
-        </form>
+    <div className="min-h-screen pt-16 flex items-center justify-center bg-gray-100">
+      <ToastContainer position="top-center" limit={1} />
+      <div className="w-full max-w-md px-4 py-8">
+        <div className="bg-white p-8 rounded-lg shadow-md">
+          <h2 className="text-2xl font-bold mb-6 text-center">Sign Up</h2>
+          <form onSubmit={handleSubmit} className="space-y-4">
+            <div>
+              <label className="block text-sm font-medium mb-2" htmlFor="username">
+                Username
+              </label>
+              <input
+                type="text"
+                id="username"
+                name="username"
+                value={formData.username}
+                onChange={handleChange}
+                className="w-full p-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-600"
+                required
+                disabled={isLoading}
+              />
+            </div>
+            <div>
+              <label className="block text-sm font-medium mb-2" htmlFor="email">
+                Email
+              </label>
+              <input
+                type="email"
+                id="email"
+                name="email"
+                value={formData.email}
+                onChange={handleChange}
+                className="w-full p-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-600"
+                required
+                disabled={isLoading}
+              />
+            </div>
+            <div>
+              <label className="block text-sm font-medium mb-2" htmlFor="password">
+                Password
+              </label>
+              <input
+                type="password"
+                id="password"
+                name="password"
+                value={formData.password}
+                onChange={handleChange}
+                className="w-full p-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-600"
+                required
+                disabled={isLoading}
+              />
+            </div>
+            <div>
+              <label className="block text-sm font-medium mb-2" htmlFor="confirm_password">
+                Confirm Password
+              </label>
+              <input
+                type="password"
+                id="confirm_password"
+                name="confirm_password"
+                value={formData.confirm_password}
+                onChange={handleChange}
+                className="w-full p-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-600"
+                required
+                disabled={isLoading}
+              />
+            </div>
+            <button
+              type="submit"
+              className="w-full bg-blue-600 text-white py-2 rounded hover:bg-blue-700 transition-colors disabled:bg-blue-400"
+              disabled={isLoading}
+            >
+              {isLoading ? 'Signing up...' : 'Sign Up'}
+            </button>
+            <p className="mt-4 text-sm text-center">
+              Already have an account?{' '}
+              <Link href="/signin" className="text-blue-600 hover:underline">
+                Sign In
+              </Link>
+            </p>
+          </form>
+        </div>
       </div>
     </div>
   );

@@ -68,7 +68,6 @@ export default function ShopContent() {
 
   return (
     <main className="pt-28 min-h-screen bg-white dark:bg-gray-900">
-      {/* Banner Carousel */}
       <div className="relative mb-12">
         <Swiper
           modules={[Navigation, Pagination, Autoplay, EffectFade]}
@@ -127,7 +126,6 @@ export default function ShopContent() {
       </div>
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        {/* Products Grid */}
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8">
           {products.map((product) => (
             <motion.div
@@ -175,7 +173,7 @@ export default function ShopContent() {
                   </p>
                   <div className="flex items-center justify-between mt-4">
                     <span className="text-xl font-bold bg-gradient-to-r from-blue-600 to-blue-400 bg-clip-text text-transparent">
-                      ${product.price}
+                      Cfa{product.price}
                     </span>
                     <button 
                       onClick={(e) => {

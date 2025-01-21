@@ -1,25 +1,28 @@
 "use client";
 import React, { useEffect, useState } from "react";
-import { ShoppingCart, Menu, X, Sun, Moon, Globe } from "lucide-react";
+import { ShoppingCart, Menu, X, Sun, Moon, Globe, LogOut } from "lucide-react";
 import Link from "next/link";
 import Image from "next/image";
-import { usePathname } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import { useCart } from "@/app/context/CartContext";
 import { useLanguage } from "@/app/context/LanguageContext";
+import { useAuth } from "@/app/context/AuthContext";
 import { motion, AnimatePresence } from "framer-motion";
-import Cookies from 'js-cookie';
 
 const Navbar = () => {
   const pathname = usePathname();
+  const router = useRouter();
   const [scrollY, setScrollY] = useState(0);
   const [isScrollingUp, setIsScrollingUp] = useState(true);
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isDarkMode, setIsDarkMode] = useState(false);
   const [isCartHovered, setIsCartHovered] = useState(false);
+  const [isProfileOpen, setIsProfileOpen] = useState(false);
 
   const { cartItems } = useCart();
   const { language, changeLanguage } = useLanguage();
+  const { user, logout } = useAuth();
   const [translations, setTranslations] = useState({});
 
   useEffect(() => {
@@ -34,18 +37,9 @@ const Navbar = () => {
     loadTranslations();
   }, [language]);
 
-  const [user, setUser] = useState(null);
-
-  useEffect(() => {
-    const loggedInUser = JSON.parse(localStorage.getItem("user")) || null;
-    setUser(loggedInUser);
-  }, []);
-
-  const handleSignOut = () => {
-    localStorage.removeItem("user");
-    Cookies.remove('user');
-    setUser(null);
-    window.location.href = '/'; 
+  const handleSignOut = async () => {
+    await logout();
+    router.push('/signin');
   };
 
   const getUserInitials = (user) => {
@@ -64,6 +58,7 @@ const Navbar = () => {
   };
 
   const toggleMenu = () => setIsMenuOpen(!isMenuOpen);
+  const toggleProfile = () => setIsProfileOpen(!isProfileOpen);
 
   const toggleTheme = () => {
     const newTheme = !isDarkMode;
@@ -220,16 +215,31 @@ const Navbar = () => {
               </div>
 
               {user ? (
-                <div className="flex items-center gap-2">
-                  <div className="w-8 h-8 flex items-center justify-center bg-blue-600 text-white rounded-full hover:bg-blue-700 transition-colors">
-                    {getUserInitials(user)}
-                  </div>
+                <div className="relative">
                   <button
-                    onClick={handleSignOut}
-                    className="text-sm font-medium text-gray-800 dark:text-gray-200 hover:text-blue-600 dark:hover:text-blue-400 transition-colors"
+                    onClick={toggleProfile}
+                    className="flex items-center gap-2 focus:outline-none"
                   >
-                    {translations?.navbar?.signOut || "Sign Out"}
+                    <div className="w-10 h-10 flex items-center justify-center bg-blue-600 text-white rounded-full hover:bg-blue-700 transition-colors text-sm font-medium">
+                      {getUserInitials(user)}
+                    </div>
                   </button>
+                  
+                  {isProfileOpen && (
+                    <div className="absolute right-0 mt-2 w-48 bg-white dark:bg-gray-800 rounded-lg shadow-lg py-2">
+                      <div className="px-4 py-2 border-b border-gray-200 dark:border-gray-700">
+                        <p className="text-sm font-medium text-gray-900 dark:text-white">{user.username || user.email}</p>
+                        <p className="text-xs text-gray-500 dark:text-gray-400">{user.email}</p>
+                      </div>
+                      <button
+                        onClick={handleSignOut}
+                        className="w-full flex items-center gap-2 px-4 py-2 text-sm text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-700"
+                      >
+                        <LogOut size={16} />
+                        <span>{translations?.navbar?.signOut || "Sign Out"}</span>
+                      </button>
+                    </div>
+                  )}
                 </div>
               ) : (
                 <div className="hidden md:flex items-center gap-4">
@@ -241,7 +251,7 @@ const Navbar = () => {
                   </Link>
                   <Link
                     href="/signup"
-                    className="text-sm font-medium text-gray-800 dark:text-gray-200 hover:text-blue-600 dark:hover:text-blue-400 transition-colors"
+                    className="px-4 py-2 text-sm font-medium text-white bg-blue-600 rounded-lg hover:bg-blue-700 transition-colors"
                   >
                     {translations?.navbar?.signUp || "Sign Up"}
                   </Link>
