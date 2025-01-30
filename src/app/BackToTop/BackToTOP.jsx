@@ -14,8 +14,6 @@ const BackToTopButton = () => {
         setShowButton(false);
       }
     };
-
-    // Throttle the scroll event for better performance
     let timeoutId;
     const throttledScroll = () => {
       if (timeoutId) clearTimeout(timeoutId);

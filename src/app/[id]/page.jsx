@@ -77,7 +77,6 @@ export default function ProductDetail({ params }) {
       <ToastContainer />
       <div className="max-w-7xl mx-auto p-6">
         <div className="grid grid-cols-1 md:grid-cols-2 gap-8 items-center">
-          {/* Product Image */}
           <div className="relative w-full h-96 md:h-[500px]">
             <Image
               src={image || "/placeholder.png"}

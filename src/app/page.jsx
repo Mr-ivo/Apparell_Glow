@@ -1,4 +1,4 @@
- "use client";
+"use client";
 import { useState, useEffect, useRef } from "react";
 import Image from "next/image";
 import Link from "next/link";
@@ -56,7 +56,7 @@ export default function Page() {
       .toLowerCase()
       .includes(searchQuery.toLowerCase());
     const matchesFilter = selectedFilter
-      ? product.category === selectedFilter
+      ? (product.category?.toLowerCase() || '') === selectedFilter.toLowerCase()
       : true;
     return matchesSearch && matchesFilter;
   });
@@ -167,7 +167,7 @@ export default function Page() {
           className="p-2 border border-gray-300 rounded-md dark:bg-gray-800 dark:text-white"
         >
           <option value="">All Categories</option>
-          {["soap", "perfumes", "glycolic", "tube", "body lotions"].map(
+          {["soap", "perfumes"].map(
             (category) => (
               <option key={category} value={category}>
                 {category}

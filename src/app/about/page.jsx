@@ -69,7 +69,7 @@ export default function Page() {
             <h2 className="text-3xl md:text-4xl font-bold">Our Story</h2>
             <p className="text-gray-600 dark:text-gray-300 leading-relaxed">
               At ApparellGlow, we believe that beauty is not just about appearances, but about self-confidence, well-being, and self-expression. 
-              Established in 2004, our mission has always been to provide high-quality, natural, and ethically sourced cosmetic products to our customers.
+              Established in 2023, our mission has always been to provide high-quality, natural, and ethically sourced cosmetic products to our customers.
             </p>
             <p className="text-gray-600 dark:text-gray-300 leading-relaxed">
               Our founder, MR IVO started the journey after realizing that skincare products should nourish and protect, not harm, your skin. With a deep passion for natural ingredients, we carefully curate products that are designed to bring out the best in every skin type.
@@ -78,7 +78,6 @@ export default function Page() {
           <div className="h-64 bg-gradient-to-br from-gray-200 to-gray-100 dark:from-gray-800 dark:to-gray-900 rounded-2xl shadow-lg"></div>
         </motion.section>
 
-        {/* Our Mission */}
         <motion.section 
           variants={fadeInUp}
           className="grid md:grid-cols-2 gap-12 items-center"
@@ -92,7 +91,6 @@ export default function Page() {
           </div>
         </motion.section>
 
-        {/* Why Choose Us */}
         <motion.section 
           variants={fadeInUp}
           className="space-y-8"
