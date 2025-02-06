@@ -55,9 +55,14 @@ export default function Page() {
     const matchesSearch = product.name
       .toLowerCase()
       .includes(searchQuery.toLowerCase());
-    const matchesFilter = selectedFilter
-      ? (product.category?.toLowerCase() || '') === selectedFilter.toLowerCase()
-      : true;
+
+    if (!selectedFilter) return matchesSearch;
+    const productCategory = product.category?.toLowerCase() || "";
+    const matchesFilter =
+      selectedFilter === "perfumes"
+        ? productCategory === "perfume" || productCategory === "perfumes"
+        : productCategory === selectedFilter.toLowerCase();
+
     return matchesSearch && matchesFilter;
   });
 
@@ -167,13 +172,8 @@ export default function Page() {
           className="p-2 border border-gray-300 rounded-md dark:bg-gray-800 dark:text-white"
         >
           <option value="">All Categories</option>
-          {["soap", "perfumes"].map(
-            (category) => (
-              <option key={category} value={category}>
-                {category}
-              </option>
-            )
-          )}
+          <option value="soap">Soap</option>
+          <option value="perfumes">Perfumes</option>
         </select>
       </div>
 

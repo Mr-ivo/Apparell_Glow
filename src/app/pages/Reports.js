@@ -22,13 +22,13 @@ export default function Reports() {
   };
 
   const topProducts = [
-    { name: 'Hydrating Lip Balm', sales: 120 },
+    { name: 'Hydrating oil', sales: 120 },
     { name: 'Glow Serum', sales: 95 },
-    { name: 'Matte Lipstick', sales: 85 },
+    { name: 'perfumes', sales: 85 },
   ];
 
   const metrics = [
-    { title: 'Total Revenue', value: '$7,500', icon: <BarChart className="w-6 h-6 text-blue-500" /> },
+    { title: 'Total Revenue', value: 'Cfa7,500', icon: <BarChart className="w-6 h-6 text-blue-500" /> },
     { title: 'Total Orders', value: '320', icon: <Calendar className="w-6 h-6 text-yellow-500" /> },
     { title: 'Top Product', value: 'Hydrating Lip Balm', icon: <TrendingUp className="w-6 h-6 text-green-500" /> },
   ];
