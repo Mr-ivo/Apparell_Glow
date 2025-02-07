@@ -73,7 +73,7 @@ export default function ShopContent() {
   const fetchProducts = async () => {
     setIsLoading(true);
     try {
-      const response = await fetch("https://glow-backend-2nxl.onrender.com/api/products");
+      const response = await fetch("http://glow-backend-2nxl.onrender.com/api/products");
       if (!response.ok) throw new Error("Failed to fetch products");
       const data = await response.json();
       setProducts(data);
@@ -254,86 +254,85 @@ export default function ShopContent() {
               {filteredProducts.map((product) => (
                 <motion.div
                   key={product._id}
-                  layout
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  exit={{ opacity: 0, y: 20 }}
-                  className="group bg-white dark:bg-gray-800 rounded-2xl overflow-hidden
-                           shadow-lg hover:shadow-2xl transition-all duration-300"
+                  initial={{ opacity: 0, y: 30 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.5 }}
+                  className="group bg-white dark:bg-gray-900 rounded-xl overflow-hidden shadow-lg relative"
                 >
-                  <Link href={`/product/${product._id}`}>
-                    <div className="relative h-80">
-                      <Image
-                        src={product.image}
-                        alt={product.name}
-                        fill
-                        style={{ objectFit: "cover" }}
-                        className="transform group-hover:scale-110 transition-transform duration-500"
-                      />
-                      <div className="absolute top-2 right-2 z-10">
-                        <button
-                          onClick={() => {
-                            if (!user) {
-                              toast.error("Please sign in to add to wishlist", {
-                                position: "top-center",
-                                autoClose: 3000,
-                              });
-                              return;
-                            }
-                            if (isInWishlist(product._id)) {
-                              removeFromWishlist(product._id);
-                              toast.success("Removed from wishlist");
-                            } else {
-                              addToWishlist(product);
-                              toast.success("Added to wishlist");
-                            }
-                          }}
-                          className={`p-2 rounded-full bg-white shadow-md transition-colors ${
-                            isInWishlist(product._id) ? 'text-red-500' : 'text-gray-400 hover:text-red-500'
-                          }`}
-                        >
-                          <Heart className="w-5 h-5" fill={isInWishlist(product._id) ? "currentColor" : "none"} />
-                        </button>
-                      </div>
+                  <div className="relative h-64 overflow-hidden">
+                    <Image
+                      src={product.image}
+                      layout="fill"
+                      objectFit="cover"
+                      alt={product.name}
+                      className="transition-transform duration-500 group-hover:scale-110"
+                    />
+                    <div className="absolute inset-0 bg-black/20 group-hover:bg-black/40 transition-colors duration-300" />
+                    
+                    {/* Wishlist Button */}
+                    <div className="absolute top-2 right-2 z-50">
                       <button
                         onClick={(e) => {
                           e.preventDefault();
                           e.stopPropagation();
-                          handleToggleFavorite(product._id);
+                          if (!user) {
+                            toast.error("Please sign in to add to wishlist", {
+                              position: "top-center",
+                              autoClose: 3000,
+                            });
+                            return;
+                          }
+                          if (isInWishlist(product._id)) {
+                            removeFromWishlist(product._id);
+                            toast.success("Removed from wishlist");
+                          } else {
+                            addToWishlist(product);
+                            toast.success("Added to wishlist");
+                          }
                         }}
-                        className={`absolute top-4 right-4 p-2.5 rounded-full
-                                  transition-all duration-300 ${
-                                    favorites.has(product._id)
-                                      ? "bg-red-500 text-white"
-                                      : "bg-white/80 text-gray-800 hover:bg-red-500 hover:text-white"
-                                  }`}
+                        className={`p-2 rounded-full bg-white shadow-md transition-colors ${
+                          isInWishlist(product._id) ? 'text-red-500' : 'text-gray-400 hover:text-red-500'
+                        }`}
                       >
-                        <Heart className="w-5 h-5" />
+                        <Heart className="w-5 h-5" fill={isInWishlist(product._id) ? "currentColor" : "none"} />
                       </button>
                     </div>
-                    <div className="p-6">
-                      <h3 className="text-lg font-semibold text-gray-800 dark:text-white mb-2">
+                  </div>
+
+                  <div className="p-6">
+                    {/* Product Details */}
+                    <Link href={`/${product._id}`} className="block">
+                      <h3 className="text-xl font-semibold mb-2 dark:text-white">
                         {product.name}
                       </h3>
-                      <p className="text-sm text-gray-600 dark:text-gray-300 mb-4 line-clamp-2">
-                        {product.description}
-                      </p>
-                      <div className="flex items-center justify-between">
-                        <span className="text-xl font-bold text-blue-600 dark:text-purple-400">
-                          CAF {product.price?.toLocaleString()}
-                        </span>
-                        <button
-                          onClick={() => handleAddToCart(product)}
-                          className="bg-gradient-to-r bg-blue-600 text-white
-                                   px-2 py-2 rounded-full flex items-center gap-2 text-sm
-                                   hover:opacity-90 transition-opacity duration-300"
-                        >
-                          <ShoppingBag className="w-3 h-3" />
-                          Add to Cart
-                        </button>
+                      <div className="flex items-center justify-between mb-4">
+                        <div>
+                          <span className="text-2xl font-bold text-gray-900 dark:text-white">
+                            CAF{product.price}
+                          </span>
+                          {product.oldPrice && (
+                            <span className="ml-2 text-sm line-through text-gray-500">
+                              CAF{product.oldPrice}
+                            </span>
+                          )}
+                        </div>
                       </div>
-                    </div>
-                  </Link>
+                    </Link>
+
+                    {/* Add to Cart Button */}
+                    <motion.button
+                      whileHover={{ scale: 1.05 }}
+                      onClick={(e) => {
+                        e.preventDefault();
+                        e.stopPropagation();
+                        handleAddToCart(product);
+                      }}
+                      className="w-full bg-black dark:bg-white text-white dark:text-black py-2 rounded-lg
+                      transition-colors duration-300 hover:bg-gray-800 dark:hover:bg-gray-200"
+                    >
+                      Add to Cart
+                    </motion.button>
+                  </div>
                 </motion.div>
               ))}
             </motion.div>
