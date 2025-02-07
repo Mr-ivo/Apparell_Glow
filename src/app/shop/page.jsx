@@ -3,23 +3,21 @@ import { useState, useEffect } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { motion, AnimatePresence } from "framer-motion";
-import { Swiper, SwiperSlide } from "swiper/react";
-import {
-  Navigation,
-  Pagination,
-  Autoplay,
-  EffectCoverflow,
-} from "swiper/modules";
-import "swiper/css";
-import "swiper/css/navigation";
-import "swiper/css/pagination";
-import "swiper/css/effect-coverflow";
 import { useCart } from "../context/CartContext";
+import { useAuth } from "../context/AuthContext";
+import { useWishlist } from '../context/WishlistContext';
+import { useRouter } from 'next/navigation';  
 import { ShoppingBag, Heart, Star, Search } from "lucide-react";
 import Footer from "../Footer/Footer";
 import BackToTopButton from "../BackToTop/BackToTOP";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { Swiper, SwiperSlide } from "swiper/react";
+import { Navigation, Pagination, Autoplay, EffectCoverflow } from "swiper/modules";
+import "swiper/css";
+import "swiper/css/navigation";
+import "swiper/css/pagination";
+import "swiper/css/effect-coverflow";
 
 const heroSlides = [
   {
@@ -53,6 +51,9 @@ const categories = [
 
 export default function ShopContent() {
   const { cartItems, addToCart } = useCart();
+  const { addToWishlist, removeFromWishlist, isInWishlist } = useWishlist();
+  const { user } = useAuth();
+  const router = useRouter();
   const [products, setProducts] = useState([]);
   const [favorites, setFavorites] = useState(new Set());
   const [mounted, setMounted] = useState(false);
@@ -106,11 +107,16 @@ export default function ShopContent() {
   };
 
   
-  const handleAddToCart = (product, e) => {
-    e.preventDefault();
-    e.stopPropagation();
-    addToCart(product);
+  const handleAddToCart = (product) => {
+    if (!user) {
+      toast.error("Please sign in to add items to cart", {
+        position: "top-center",
+        autoClose: 3000,
+      });
+      return;
+    }
     
+    addToCart(product);
     toast.success(`${product.name} has been added to your cart`, {
       position: "top-right",
       autoClose: 3000,
@@ -264,6 +270,31 @@ export default function ShopContent() {
                         style={{ objectFit: "cover" }}
                         className="transform group-hover:scale-110 transition-transform duration-500"
                       />
+                      <div className="absolute top-2 right-2 z-10">
+                        <button
+                          onClick={() => {
+                            if (!user) {
+                              toast.error("Please sign in to add to wishlist", {
+                                position: "top-center",
+                                autoClose: 3000,
+                              });
+                              return;
+                            }
+                            if (isInWishlist(product._id)) {
+                              removeFromWishlist(product._id);
+                              toast.success("Removed from wishlist");
+                            } else {
+                              addToWishlist(product);
+                              toast.success("Added to wishlist");
+                            }
+                          }}
+                          className={`p-2 rounded-full bg-white shadow-md transition-colors ${
+                            isInWishlist(product._id) ? 'text-red-500' : 'text-gray-400 hover:text-red-500'
+                          }`}
+                        >
+                          <Heart className="w-5 h-5" fill={isInWishlist(product._id) ? "currentColor" : "none"} />
+                        </button>
+                      </div>
                       <button
                         onClick={(e) => {
                           e.preventDefault();
@@ -292,7 +323,7 @@ export default function ShopContent() {
                           CAF {product.price?.toLocaleString()}
                         </span>
                         <button
-                          onClick={(e) => handleAddToCart(product, e)}
+                          onClick={() => handleAddToCart(product)}
                           className="bg-gradient-to-r bg-blue-600 text-white
                                    px-2 py-2 rounded-full flex items-center gap-2 text-sm
                                    hover:opacity-90 transition-opacity duration-300"

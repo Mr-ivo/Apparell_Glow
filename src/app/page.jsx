@@ -4,6 +4,10 @@ import Image from "next/image";
 import Link from "next/link";
 import { motion, useScroll, useTransform, useInView } from "framer-motion";
 import { useCart } from "./context/CartContext";
+import { useAuth } from "./context/AuthContext";
+import { useRouter } from "next/navigation";
+import { useWishlist } from './context/WishlistContext';
+import { Heart } from "lucide-react";
 import BackToTopButton from "./BackToTop/BackToTOP";
 import Footer from "./Footer/Footer";
 import { ToastContainer, toast } from "react-toastify";
@@ -11,6 +15,9 @@ import "react-toastify/dist/ReactToastify.css";
 
 export default function Page() {
   const { addToCart } = useCart();
+  const { addToWishlist, removeFromWishlist, isInWishlist } = useWishlist();
+  const { user } = useAuth();
+  const router = useRouter();
   const [currentProduct, setCurrentProduct] = useState(0);
   const [products, setProducts] = useState([]);
   const [searchQuery, setSearchQuery] = useState("");
@@ -67,6 +74,14 @@ export default function Page() {
   });
 
   const handleAddToCart = (product) => {
+    if (!user) {
+      toast.error("Please sign in to add items to cart", {
+        position: "top-center",
+        autoClose: 3000,
+      });
+      return;
+    }
+    
     addToCart(product);
     toast.success(`${product.name} added to cart!`, {
       position: "top-right",
@@ -202,18 +217,47 @@ export default function Page() {
                 transition={{ duration: 0.5 }}
                 className="group bg-white dark:bg-gray-900 rounded-xl overflow-hidden shadow-lg"
               >
-                <Link href={`/${product._id}`}>
-                  <div className="relative h-64 overflow-hidden">
-                    <Image
-                      src={product.image}
-                      layout="fill"
-                      objectFit="cover"
-                      alt={product.name}
-                      className="transition-transform duration-500 group-hover:scale-110"
-                    />
-                    <div className="absolute inset-0 bg-black/20 group-hover:bg-black/40 transition-colors duration-300" />
+                <div className="relative">
+                  <Link href={`/${product._id}`}>
+                    <div className="relative h-64 overflow-hidden">
+                      <Image
+                        src={product.image}
+                        layout="fill"
+                        objectFit="cover"
+                        alt={product.name}
+                        className="transition-transform duration-500 group-hover:scale-110"
+                      />
+                      <div className="absolute inset-0 bg-black/20 group-hover:bg-black/40 transition-colors duration-300" />
+                    </div>
+                  </Link>
+                  <div className="absolute top-2 right-2" style={{ zIndex: 1000 }}>
+                    <button
+                      onClick={(e) => {
+                        e.preventDefault();
+                        e.stopPropagation();
+                        if (!user) {
+                          toast.error("Please sign in to add to wishlist", {
+                            position: "top-center",
+                            autoClose: 3000,
+                          });
+                          return;
+                        }
+                        if (isInWishlist(product._id)) {
+                          removeFromWishlist(product._id);
+                          toast.success("Removed from wishlist");
+                        } else {
+                          addToWishlist(product);
+                          toast.success("Added to wishlist");
+                        }
+                      }}
+                      className={`p-2 rounded-full bg-white shadow-md transition-colors ${
+                        isInWishlist(product._id) ? 'text-red-500' : 'text-gray-400 hover:text-red-500'
+                      }`}
+                    >
+                      <Heart className="w-5 h-5" fill={isInWishlist(product._id) ? "currentColor" : "none"} />
+                    </button>
                   </div>
-                </Link>
+                </div>
                 <div className="p-6">
                   <h3 className="text-xl font-semibold mb-2 dark:text-white">
                     {product.name}
@@ -234,7 +278,7 @@ export default function Page() {
                     whileHover={{ scale: 1.05 }}
                     onClick={() => handleAddToCart(product)}
                     className="w-full bg-black dark:bg-white text-white dark:text-black py-2 rounded-lg
-          transition-colors duration-300 hover:bg-gray-800 dark:hover:bg-gray-200"
+                    transition-colors duration-300 hover:bg-gray-800 dark:hover:bg-gray-200"
                   >
                     Add to Cart
                   </motion.button>

@@ -46,7 +46,7 @@ const CheckoutPage = () => {
     }));
   };
 
-  const handleSubmit = async (e) => {
+  const handleCheckout = async (e) => {
     e.preventDefault();
     setIsProcessing(true);
 
@@ -55,6 +55,7 @@ const CheckoutPage = () => {
     setIsProcessing(false);
     setOrderComplete(true);
     clearCart();
+    router.push('/thank-you');
   };
 
   const steps = [
@@ -302,7 +303,7 @@ const CheckoutPage = () => {
             <div className="bg-white p-6 rounded-lg shadow-md">
               {!orderComplete ? (
                 <>
-                  <form onSubmit={handleSubmit}>
+                  <form onSubmit={handleCheckout}>
                     {step === 1 && renderShippingForm()}
                     {step === 2 && renderPaymentForm()}
                     <div className="mt-6 flex justify-between">
@@ -315,7 +316,7 @@ const CheckoutPage = () => {
                           <ChevronLeft className="w-5 h-5 mr-1" />
                           Back
                         </button>
-                      )}``
+                      )}
                       {step < 2 ? (
                         <button
                           type="button"

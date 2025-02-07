@@ -1,12 +1,13 @@
 "use client";
 import React, { useEffect, useState } from "react";
-import { ShoppingCart, Menu, X, Sun, Moon, Globe, LogOut } from "lucide-react";
+import { ShoppingCart, Menu, X, Sun, Moon, Globe, LogOut, Heart } from "lucide-react";
 import Link from "next/link";
 import Image from "next/image";
 import { usePathname, useRouter } from "next/navigation";
 import { useCart } from "@/app/context/CartContext";
 import { useLanguage } from "@/app/context/LanguageContext";
 import { useAuth } from "@/app/context/AuthContext";
+import { useWishlist } from "@/app/context/WishlistContext";
 import { motion, AnimatePresence } from "framer-motion";
 
 const Navbar = () => {
@@ -21,6 +22,7 @@ const Navbar = () => {
   const [isProfileOpen, setIsProfileOpen] = useState(false);
 
   const { cartItems } = useCart();
+  const { wishlistItems } = useWishlist();
   const { language, changeLanguage } = useLanguage();
   const { user, logout } = useAuth();
   const [translations, setTranslations] = useState({});
@@ -196,23 +198,32 @@ const Navbar = () => {
                 </div>
               </div>
 
-              <div
-                className="relative"
-                onMouseEnter={() => setIsCartHovered(true)}
-                onMouseLeave={() => setIsCartHovered(false)}
-              >
+              {user && (
                 <Link
-                  href="/cart"
-                  className="relative p-2 rounded-full transition-colors text-gray-800 dark:text-gray-200"
+                  href="/wishlist"
+                  className="relative flex items-center justify-center w-10 h-10 rounded-full hover:bg-gray-100 transition-colors"
                 >
-                  <ShoppingCart size={24} />
-                  {cartItems.length > 0 && (
-                    <span className={`cart-badge bg-blue-600 text-white ${isCartHovered ? 'cart-badge-bounce' : ''}`}>
-                      {cartItems.length}
+                  <Heart className="w-6 h-6 text-gray-600" />
+                  {wishlistItems.length > 0 && (
+                    <span className="absolute -top-1 -right-1 flex items-center justify-center w-5 h-5 text-xs font-bold text-white bg-blue-600 rounded-full">
+                      {wishlistItems.length}
                     </span>
                   )}
                 </Link>
-              </div>
+              )}
+
+              {/* Cart icon */}
+              <Link
+                href="/cart"
+                className="relative flex items-center justify-center w-10 h-10 rounded-full hover:bg-gray-100 transition-colors"
+              >
+                <ShoppingCart className="w-6 h-6 text-gray-600" />
+                {cartItems.length > 0 && (
+                  <span className="absolute -top-1 -right-1 flex items-center justify-center w-5 h-5 text-xs font-bold text-white bg-blue-600 rounded-full">
+                    {cartItems.length}
+                  </span>
+                )}
+              </Link>
 
               {user ? (
                 <div className="relative">

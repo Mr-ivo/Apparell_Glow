@@ -4,6 +4,7 @@ import Navbar from "./pages/Navbar/Navbar";
 import { CartProvider } from "./context/CartContext";
 import { LanguageProvider } from "./context/LanguageContext";
 import { AuthProvider } from "./context/AuthContext";
+import { WishlistProvider } from "./context/WishlistContext";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -27,8 +28,10 @@ export default function RootLayout({ children }) {
         <AuthProvider>
           <LanguageProvider>
             <CartProvider>
-              <Navbar />
-              {children}
+              <WishlistProvider>
+                <Navbar />
+                {children}
+              </WishlistProvider>
             </CartProvider>
           </LanguageProvider>
         </AuthProvider>
