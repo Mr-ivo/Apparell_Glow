@@ -35,9 +35,9 @@ const itemVariants = {
 };
 
 export default function CartPage() {
-  const { cartItems, removeFromCart, getTotalPrice } = useCart();
+  const { cartItems, removeFromCart, getCartTotal } = useCart();
   const shipping = 2000;
-  const total = getTotalPrice() || 0;
+  const total = getCartTotal() || 0;
   const finalTotal = total + shipping;
 
   return (
@@ -126,7 +126,7 @@ export default function CartPage() {
                         <motion.button
                           whileHover={{ scale: 1.1 }}
                           whileTap={{ scale: 0.9 }}
-                          onClick={() => removeFromCart(item.id)}
+                          onClick={() => removeFromCart(item._id)}
                           className="p-2 text-gray-400 hover:text-red-500 transition-colors"
                         >
                           <Trash2 className="w-5 h-5" />

@@ -50,7 +50,7 @@ export default function WishlistPage() {
         ) : (
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             {wishlistItems.map((product) => (
-              <div key={product.id} className="bg-white rounded-lg shadow-md overflow-hidden group">
+              <div key={product._id} className="bg-white rounded-lg shadow-md overflow-hidden group">
                 <div className="relative h-64">
                   <Image
                     src={product.image}
@@ -72,7 +72,7 @@ export default function WishlistPage() {
                     </button>
                     <button
                       onClick={() => {
-                        removeFromWishlist(product.id);
+                        removeFromWishlist(product._id);
                         toast.success('Removed from wishlist');
                       }}
                       className="p-2 text-gray-400 hover:text-red-500 transition-colors"
