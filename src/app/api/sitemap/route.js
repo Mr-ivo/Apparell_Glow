@@ -2,7 +2,7 @@ import { getServerSideSitemap } from 'next-sitemap';
 
 export async function GET(request) {
   // Base URL of your website
-  const baseUrl = process.env.SITE_URL || 'https://apparellglow.com';
+  const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || process.env.SITE_URL || 'https://apparellglow.store';
   
   // Define your static routes
   const staticPages = [

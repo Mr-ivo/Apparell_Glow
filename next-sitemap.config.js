@@ -1,6 +1,6 @@
 /** @type {import('next-sitemap').IConfig} */
 module.exports = {
-  siteUrl: process.env.SITE_URL || 'https://apparellglow.com', // Replace with your actual domain
+  siteUrl: process.env.NEXT_PUBLIC_SITE_URL || process.env.SITE_URL || 'https://apparellglow.store', // Your actual domain
   generateRobotsTxt: true,
   robotsTxtOptions: {
     policies: [
